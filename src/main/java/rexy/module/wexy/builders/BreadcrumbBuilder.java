@@ -24,7 +24,11 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 		
 		@Override
 		public StringBuilder getPath() {
-			return parent.getPath().append('/').append(getUrlSuffix());
+			StringBuilder path = parent.getPath();
+			if (path.charAt(path.length()-1) != '/' && getUrlSuffix().charAt(0) != '/') {
+				path.append('/');
+			}
+			return path.append(getUrlSuffix());
 		}
 		
 		protected abstract String getName();
