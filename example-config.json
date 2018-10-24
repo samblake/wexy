@@ -1,0 +1,56 @@
+{
+  "port": "8081",
+  "baseUrl": "/",
+  "modules": {
+    "wexy": {
+      "enabled": true
+    },
+    "delay": {
+      "enabled": true
+    },
+    "mock": {
+      "enabled": true,
+      "interceptOnSet": true
+    },
+    "proxy": {
+      "enabled": true
+    }
+  },
+  "apis": [
+    {
+      "name": "metaweather",
+      "baseUrl": "weather",
+      "contentType": "application/json",
+      "proxy": "http://www.metaweather.com/api",
+      "endpoints": [
+        {
+          "name": "location",
+          "endpoint": "/location/search/?query={query}",
+          "responses": [
+            {
+              "name": "Successful",
+              "httpStatus": 200,
+              "headers": {
+                "abc": "Test 1",
+                "xyz": "Test 2"
+              },
+              "body": {
+                "title": "London",
+                "location_type": "City",
+                "woeid": 44418,
+                "latt_long": "51.506321,-0.12714"
+              }
+            },
+            {
+              "name": "Invalid",
+              "httpStatus": 401,
+              "body": {
+                "error": "invalid request"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
