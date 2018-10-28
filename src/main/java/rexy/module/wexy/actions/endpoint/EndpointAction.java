@@ -42,9 +42,7 @@ public class EndpointAction extends WexyAction {
 					.map(oi -> new Tab<>(oi.getObjectName().getKeyProperty("name"), oi))
 					.collect(toList());
 			
-			if (!tabs.isEmpty()) {
-				tabs.get(0).setActive();
-			}
+			tabs.stream().filter(tab -> tab.getId().equals("mock")).findFirst().ifPresent(Tab::setActive);
 			
 			BreadcrumbBuilder breadcrumbs = createBreadcrumbs().withApi(api).withEndpoint(endpointName);
 			Template template = createTemplate("endpoint", breadcrumbs).with("tabs", tabs);

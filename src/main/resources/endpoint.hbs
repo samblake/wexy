@@ -51,11 +51,10 @@
                 </div>
             </section>
 
-            <div class="container">
+            <div class="column is-12">
 
-                <div class="column is-12">
-
-                    <div class="tabs is-centered is-toggle is-medium">
+                <div class="card">
+                    <div class="card-header tabs is-centered is-toggle is-medium">
                         <ul>
                             {{#tabs}}
                                 <li {{#if active}}class="is-active"{{/if}}>
@@ -65,20 +64,26 @@
                         </ul>
                     </div>
 
-                    <div id="tabs">
-
+                    <div id="tabs" class="content">
                         {{#tabs}}
+                            <div {{#unless active}}class="is-hidden"{{/unless}}>
 
-                            <div class="card">
-                                <div class="content">
-                                    {{name}}
+                                <div class="field is-horizontal">
+                                    <div class="field-label is-normal">
+                                        <label class="label">{{name}}</label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <div class="control">
+                                                <input class="input" name="{{name}}" id="{{name}}" type="text" autofocus>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
-
                         {{/tabs}}
-
                     </div>
-
                 </div>
 
             </div>
