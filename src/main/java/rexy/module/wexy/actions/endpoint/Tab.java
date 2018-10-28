@@ -1,4 +1,4 @@
-package rexy.module.wexy.model;
+package rexy.module.wexy.actions.endpoint;
 
 public class Tab<T> {
 	

@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/3.0.0-beta.1/cash.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/rexy.css">
+    <script src="/rexy.js"></script>
 </head>
 
 <body>
@@ -49,7 +51,7 @@
                 </div>
             </section>
 
-            <div class="columns">
+            <div class="container">
 
                 <div class="column is-12">
 
@@ -57,12 +59,24 @@
                         <ul>
                             {{#tabs}}
                                 <li {{#if active}}class="is-active"{{/if}}>
-                                    <a>
-                                        <span>{{name}}</span>
-                                    </a>
+                                    <a>{{name}}</a>
                                 </li>
                             {{/tabs}}
                         </ul>
+                    </div>
+
+                    <div id="tabs">
+
+                        {{#tabs}}
+
+                            <div class="card">
+                                <div class="content">
+                                    {{name}}
+                                </div>
+                            </div>
+
+                        {{/tabs}}
+
                     </div>
 
                 </div>

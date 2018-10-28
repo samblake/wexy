@@ -2,7 +2,7 @@ package rexy.module.wexy.actions;
 
 import com.github.jknack.handlebars.Handlebars;
 import rexy.http.RexyHandler;
-import rexy.module.wexy.model.ApiLink;
+import rexy.module.wexy.actions.index.ApiLink;
 
 import java.util.List;
 import java.util.Map;

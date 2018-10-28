@@ -7,7 +7,7 @@ import rexy.http.NanoRequest;
 import rexy.http.RexyHandler;
 import rexy.http.RexyServer;
 import rexy.module.Module;
-import rexy.module.wexy.actions.IndexAction;
+import rexy.module.wexy.actions.index.IndexAction;
 
 import java.io.InputStream;
 import java.util.List;
@@ -46,7 +46,7 @@ public class WexyServer extends RexyServer {
 		String url = session.getUri(); // TODO remove with base URL
 		
 		// Handle static files
-		if (url.endsWith(".css") || url.endsWith(".ljs")) {
+		if (url.endsWith(".css") || url.endsWith(".js")) {
 			InputStream resource = session.getClass().getResourceAsStream(url);
 			if (resource != null) {
 				logger.debug("Serving " + url);

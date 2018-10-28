@@ -1,13 +1,13 @@
-package rexy.module.wexy.actions;
+package rexy.module.wexy.actions.endpoint;
 
 import com.github.jknack.handlebars.Handlebars;
 import rexy.config.model.Api;
 import rexy.http.RexyResponse;
+import rexy.module.wexy.actions.WexyAction;
 import rexy.module.wexy.builders.BreadcrumbBuilder;
 import rexy.module.wexy.mbean.MBeanQueryBuilder;
 import rexy.module.wexy.mbean.MBeanRepo;
 import rexy.module.wexy.mbean.QueryBuilder;
-import rexy.module.wexy.model.Tab;
 import rexy.module.wexy.model.Template;
 
 import javax.management.ObjectInstance;

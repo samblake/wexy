@@ -1,4 +1,4 @@
-package rexy.module.wexy.model;
+package rexy.module.wexy.actions.index;
 
 import rexy.config.model.Api;
 

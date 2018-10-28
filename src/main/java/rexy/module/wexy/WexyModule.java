@@ -10,9 +10,9 @@ import rexy.http.RexyHandler;
 import rexy.http.RexyRequest;
 import rexy.http.RexyResponse;
 import rexy.module.ModuleAdapter;
-import rexy.module.wexy.actions.ApiAction;
-import rexy.module.wexy.actions.EndpointAction;
 import rexy.module.wexy.actions.WexyAction;
+import rexy.module.wexy.actions.api.ApiAction;
+import rexy.module.wexy.actions.endpoint.EndpointAction;
 
 import java.io.IOException;
 import java.util.Map;

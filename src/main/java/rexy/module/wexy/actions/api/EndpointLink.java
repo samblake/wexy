@@ -1,4 +1,4 @@
-package rexy.module.wexy.model;
+package rexy.module.wexy.actions.api;
 
 import rexy.config.model.Endpoint;
 

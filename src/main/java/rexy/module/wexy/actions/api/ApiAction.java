@@ -1,10 +1,10 @@
-package rexy.module.wexy.actions;
+package rexy.module.wexy.actions.api;
 
 import com.github.jknack.handlebars.Handlebars;
 import rexy.config.model.Api;
 import rexy.http.RexyHandler;
 import rexy.http.RexyResponse;
-import rexy.module.wexy.model.EndpointLink;
+import rexy.module.wexy.actions.AbstractApiAction;
 import rexy.module.wexy.model.Template;
 
 import java.io.IOException;
