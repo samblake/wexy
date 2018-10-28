@@ -87,3 +87,6 @@ nav.navbar {
 .action-cell {
   text-align: right
 }
+.tabs a {
+    text-transform: capitalize;
+}

@@ -5,6 +5,8 @@ import rexy.config.model.Endpoint;
 import rexy.module.wexy.model.Breadcrumbs;
 import rexy.module.wexy.model.Breadcrumbs.Breadcrumb;
 
+import javax.management.ObjectInstance;
+
 public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 	
 	StringBuilder getPath();
@@ -37,7 +39,7 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 		
 	}
 	
-	class HomeCrumbBuilder implements BreadcrumbBuilder {
+	final class HomeCrumbBuilder implements BreadcrumbBuilder {
 		
 		private final String baseUrl;
 		
@@ -59,7 +61,7 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 			return new StringBuilder(baseUrl);
 		}
 		
-		final class ApiCrumbBuilder extends ChildCrumbBuilder {
+		public final class ApiCrumbBuilder extends ChildCrumbBuilder {
 			
 			private final Api api;
 			
@@ -82,24 +84,58 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 				return new EndpointCrumbBuilder(this, endpoint);
 			}
 			
-			final class EndpointCrumbBuilder extends ChildCrumbBuilder {
+			public EndpointCrumbBuilder withEndpoint(String name) {
+				return new EndpointCrumbBuilder(this, name);
+			}
+			
+			public final class EndpointCrumbBuilder extends ChildCrumbBuilder {
 				
-				private final Endpoint endpoint;
+				private final String name;
 				
 				private EndpointCrumbBuilder(BreadcrumbBuilder parent, Endpoint endpoint) {
+					this(parent, endpoint.getName());
+				}
+				
+				public EndpointCrumbBuilder(BreadcrumbBuilder parent, String name) {
 					super(parent);
-					this.endpoint = endpoint;
+					this.name = name;
 				}
 				
 				@Override
 				protected String getName() {
-					return endpoint.getName();
+					return name;
 				}
 				
 				@Override
 				protected String getUrlSuffix() {
-					return endpoint.getName();
+					return name;
 				}
+				
+				public ModuleCrumbBuilder withModule(ObjectInstance objectInstance) {
+					String module = objectInstance.getObjectName().getKeyProperty("scope");
+					return new ModuleCrumbBuilder(this, module);
+				}
+				
+				final class ModuleCrumbBuilder extends ChildCrumbBuilder {
+					private final String name;
+					
+					public ModuleCrumbBuilder(EndpointCrumbBuilder parent, String name) {
+						super(parent);
+						this.name = name;
+					}
+					
+					@Override
+					protected String getName() {
+						return name;
+					}
+					
+					@Override
+					protected String getUrlSuffix() {
+						return name;
+					}
+					
+				}
+				
 			}
 			
 		}

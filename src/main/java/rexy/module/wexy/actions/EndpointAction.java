@@ -2,14 +2,25 @@ package rexy.module.wexy.actions;
 
 import com.github.jknack.handlebars.Handlebars;
 import rexy.config.model.Api;
-import rexy.config.model.Endpoint;
 import rexy.http.RexyResponse;
+import rexy.module.wexy.builders.BreadcrumbBuilder;
+import rexy.module.wexy.mbean.MBeanQueryBuilder;
+import rexy.module.wexy.mbean.MBeanRepo;
+import rexy.module.wexy.mbean.QueryBuilder;
+import rexy.module.wexy.model.Tab;
 import rexy.module.wexy.model.Template;
 
+import javax.management.ObjectInstance;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toList;
 
 public class EndpointAction extends WexyAction {
+	
+	private final MBeanRepo mBeanRepo = new MBeanRepo();
 	
 	public EndpointAction(String baseUrl, Handlebars handlebars) {
 		super(baseUrl, handlebars);
@@ -17,25 +28,26 @@ public class EndpointAction extends WexyAction {
 	
 	@Override
 	public RexyResponse perform(Api api, Map<String, String> params) {
-		String endpointId = params.get("endpoint");
-		return perform(api, (Endpoint)null);
+		String endpoint = params.get("endpoint");
+		
+		MBeanQueryBuilder query = new QueryBuilder().withType(api.getName()).withScope(endpoint);
+		Set<ObjectInstance> results = mBeanRepo.search(query);
+		return perform(api, endpoint, results);
 	}
 	
-	private RexyResponse perform(Api api, Endpoint endpoint) {
-		/*
+	private RexyResponse perform(Api api, String endpointName, Set<ObjectInstance> objectInstances) {
 		try {
-			MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-			ObjectName objectName = new ObjectName(String.format("Rexy:type=%s,*", api.getName()));
-			Set<ObjectInstance> objectInstances = server.queryMBeans(objectName, null);
-			return of(endpoints(api));
-		}
-		catch (MalformedObjectNameException e) {
-			return of(errorResponse(500, e.getMessage()));
-		}
-		*/
-		
-		try {
-			Template template = createTemplate("endpoint", createBreadcrumbs().withApi(api));
+			List<Tab<ObjectInstance>> tabs = objectInstances.stream()
+					.filter(oi -> oi.getObjectName().getKeyProperty("component") == null)
+					.map(oi -> new Tab<>(oi.getObjectName().getKeyProperty("name"), oi))
+					.collect(toList());
+			
+			if (!tabs.isEmpty()) {
+				tabs.get(0).setActive();
+			}
+			
+			BreadcrumbBuilder breadcrumbs = createBreadcrumbs().withApi(api).withEndpoint(endpointName);
+			Template template = createTemplate("endpoint", breadcrumbs).with("tabs", tabs);
 			return createResponse(template);
 		}
 		catch (IOException e) {

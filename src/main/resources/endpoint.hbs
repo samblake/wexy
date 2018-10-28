@@ -51,52 +51,20 @@
 
             <div class="columns">
 
-                <div class="column is-6">
-                    <div class="card">
-                        <header class="card-header">
-                            <p class="card-header-title">
-                                APIs
-                            </p>
-                        </header>
+                <div class="column is-12">
 
-                        <div class="content">
-                            <table class="table is-fullwidth is-striped">
-                                <tbody>
-                                {{#apis}}
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-angle-double-right"></i></td>
-                                        {{#with api}}<td>{{{name}}}</td>{{/with}}
-                                        <td class="action-cell"><a class="button is-small is-primary" href="{{link}}">Select</a></td>
-                                    </tr>
-                                {{/apis}}
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="tabs is-centered is-toggle is-medium">
+                        <ul>
+                            {{#tabs}}
+                                <li {{#if active}}class="is-active"{{/if}}>
+                                    <a>
+                                        <span>{{name}}</span>
+                                    </a>
+                                </li>
+                            {{/tabs}}
+                        </ul>
                     </div>
-                </div>
 
-                <div class="column is-6">
-                    <div class="card">
-                        <header class="card-header">
-                            <p class="card-header-title">
-                                Endpoints
-                            </p>
-                        </header>
-
-                        <div class="content">
-                            <table class="table is-fullwidth is-striped">
-                                <tbody>
-                                {{#endpoints}}
-                                <tr>
-                                    <td width="5%"><i class="fa fa-angle-double-right"></i></td>
-                                    {{#with endpoint}}<td>{{{name}}}</td>{{/with}}
-                                    <td class="action-cell"><a class="button is-small is-primary" href="{{link}}">Select</a></td>
-                                </tr>
-                                {{/endpoints}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
 
             </div>
