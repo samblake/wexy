@@ -62,8 +62,13 @@ nav.navbar {
 .action-cell {
   text-align: right
 }
-.tabs, .field.is-horizontal {
+.tabs {
     padding: 1rem;
+}
+.field.is-horizontal {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1rem;
 }
 .tabs ul {
     text-transform: capitalize;

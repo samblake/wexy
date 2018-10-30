@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import static com.github.jknack.handlebars.helper.ConditionalHelpers.eq;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.OK;
 import static rexy.http.Method.GET;
 
@@ -29,6 +30,7 @@ public class WexyServer extends RexyServer {
 		super(port, baseUrl, modules);
 		this.baseUrl = baseUrl;
 		this.handlebars = new Handlebars();
+		handlebars.registerHelper(eq.name(), eq);
 		
 		indexAction = new IndexAction(baseUrl, handlebars, routes);
 	}

@@ -1,5 +1,7 @@
 package rexy.module.wexy.mbean;
 
+import javax.management.JMException;
+import javax.management.MBeanInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
 import java.lang.management.ManagementFactory;
@@ -15,6 +17,15 @@ public class MBeanRepo {
 	
 	public Set<ObjectInstance> search(MBeanQueryBuilder queryBuilder) {
 		return server.queryMBeans(queryBuilder.build(), null);
+	}
+	
+	public MBeanInfo getInfo(ObjectInstance objectInstance) {
+		try {
+			return server.getMBeanInfo(objectInstance.getObjectName());
+		}
+		catch (JMException e) {
+			throw new RuntimeException("Could not get MBean info", e);
+		}
 	}
 	
 }

@@ -3,20 +3,20 @@ package rexy.module.wexy.mbean;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-public class QueryBuilder extends MBeanQueryBuilder {
+public class RexyQueryBuilder extends MBeanQueryBuilder {
 	
 	private final String base;
 	
-	public QueryBuilder() {
+	public RexyQueryBuilder() {
 		this("Rexy");
 	}
 	
-	public QueryBuilder(String base) {
+	public RexyQueryBuilder(String base) {
 		this.base = base;
 	}
 	
-	public TypeQueryBuilder withType(String type) {
-		return new TypeQueryBuilder(type);
+	public ApiQueryBuilder withApi(String type) {
+		return new ApiQueryBuilder(type);
 	}
 	
 	@Override
@@ -24,27 +24,27 @@ public class QueryBuilder extends MBeanQueryBuilder {
 		return new StringBuilder(base).append(':');
 	}
 	
-	public class TypeQueryBuilder extends MBeanQueryBuilder {
-		private final String type;
+	public class ApiQueryBuilder extends MBeanQueryBuilder {
+		private final String api;
 		
-		public TypeQueryBuilder(String type) {
-			this.type = type;
+		public ApiQueryBuilder(String api) {
+			this.api = api;
 		}
 		
-		public ScopeQueryBuilder withScope(String scope) {
-			return new ScopeQueryBuilder(scope);
+		public EndpointQueryBuilder withScope(String endpoint) {
+			return new EndpointQueryBuilder(endpoint);
 		}
 		
 		@Override
 		protected StringBuilder getName() {
-			return QueryBuilder.this.getName().append("type=").append(type).append(',');
+			return RexyQueryBuilder.this.getName().append("api=").append(api).append(',');
 		}
 		
-		public class ScopeQueryBuilder extends MBeanQueryBuilder {
-			private final String scope;
+		public class EndpointQueryBuilder extends MBeanQueryBuilder {
+			private final String endpoint;
 			
-			public ScopeQueryBuilder(String scope) {
-				this.scope = scope;
+			public EndpointQueryBuilder(String endpoint) {
+				this.endpoint = endpoint;
 			}
 			
 			public ComponentQueryBuilder withComponent(String component) {
@@ -57,7 +57,7 @@ public class QueryBuilder extends MBeanQueryBuilder {
 			
 			@Override
 			protected StringBuilder getName() {
-				return TypeQueryBuilder.this.getName().append("scope=").append(scope).append(',');
+				return ApiQueryBuilder.this.getName().append("endpoint=").append(endpoint).append(',');
 			}
 			
 			public class ComponentQueryBuilder extends MBeanQueryBuilder {
@@ -69,7 +69,7 @@ public class QueryBuilder extends MBeanQueryBuilder {
 				
 				@Override
 				protected StringBuilder getName() {
-					return ScopeQueryBuilder.this.getName().append("component=").append(scope).append(',');
+					return EndpointQueryBuilder.this.getName().append("component=").append(component).append(',');
 				}
 				
 				public NameQueryBuilder withName(String name) {
