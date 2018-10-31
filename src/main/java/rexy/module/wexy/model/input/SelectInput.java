@@ -1,17 +1,10 @@
 package rexy.module.wexy.model.input;
 
 // TODO for enums
-public class SelectInput extends Input {
-	
-	private final String value;
+public class SelectInput extends ValueInput<String> {
 	
 	public SelectInput(String label, String name, String value) {
-		super("select", label, name);
-		this.value = value;
-	}
-	
-	public String getValue() {
-		return value;
+		super("select", label, name, value);
 	}
 
 	public String[] getOptions() {

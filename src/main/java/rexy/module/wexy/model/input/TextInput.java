@@ -1,15 +1,9 @@
 package rexy.module.wexy.model.input;
 
-public class TextInput extends Input {
-	
-	private final String value;
+public class TextInput extends ValueInput<String> {
 	
 	public TextInput(String label, String name, String value) {
-		super("text", label, name);
-		this.value = value;
+		super("text", label, name, value);
 	}
 	
-	public String getValue() {
-		return value;
-	}
 }

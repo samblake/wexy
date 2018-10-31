@@ -1,15 +1,9 @@
 package rexy.module.wexy.model.input;
 
-public class NumberInput extends Input {
+public class NumberInput extends ValueInput<Long> {
 	
-	private final String value;
-	
-	public NumberInput(String label, String name, String value) {
-		super("number", label, name);
-		this.value = value;
+	public NumberInput(String label, String name, Long value) {
+		super("number", label, name, value);
 	}
 	
-	public String getValue() {
-		return value;
-	}
 }
