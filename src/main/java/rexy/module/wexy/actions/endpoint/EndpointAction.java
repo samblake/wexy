@@ -59,6 +59,7 @@ public class EndpointAction extends WexyAction {
 					.filter(oi -> "preset".equals(oi.getObjectName().getKeyProperty("component")))
 					.collect(toList());
 			
+			
 			MockModule module = new MockModule(objectInstance, mBeanRepo.getInfo(objectInstance), presets);
 			Tab<Module> tab = new Tab<>(name, module);
 			tab.setActive();

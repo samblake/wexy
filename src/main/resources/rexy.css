@@ -73,3 +73,10 @@ nav.navbar {
 .tabs ul {
     text-transform: capitalize;
 }
+.is-checkradio[type=checkbox]+label {
+    margin: 0 !important;
+}
+div.is-checkradio {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
