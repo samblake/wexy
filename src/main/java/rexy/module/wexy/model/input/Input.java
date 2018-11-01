@@ -6,10 +6,14 @@ public abstract class Input {
 	private final String label;
 	private final String name;
 	
+	private boolean disabled;
+	
 	protected Input(String type, String label, String name) {
 		this.type = type;
 		this.label = label;
 		this.name = name;
+		
+		this.disabled = false;
 	}
 	
 	public String getType() {
@@ -23,4 +27,13 @@ public abstract class Input {
 	public String getName() {
 		return name;
 	}
+	
+	public void setDisabled() {
+		disabled = true;
+	}
+	
+	public boolean isDisabled() {
+		return disabled;
+	}
+	
 }

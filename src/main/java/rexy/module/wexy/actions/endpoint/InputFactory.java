@@ -21,6 +21,16 @@ public class InputFactory {
 		String label = join(" ", splitByCharacterTypeCamelCase(attributeName));
 		label = toUpperCase(label.charAt(0)) + label.substring(1);
 		
+		Input input = createInput(mBeanInfo, beanName, attributeName, label);
+		
+		if (!mBeanInfo.isWritable()) {
+			input.setDisabled();
+		}
+		
+		return input;
+	}
+	
+	private static Input createInput(MBeanAttributeInfo mBeanInfo, String beanName, String attributeName, String label) {
 		if (beanName.equals("mock") && attributeName.equals("Body")) {
 			return new JsonInput(label, attributeName, "");
 		}
