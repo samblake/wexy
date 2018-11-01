@@ -9,14 +9,18 @@ import rexy.module.wexy.mbean.MBeanQueryBuilder;
 import rexy.module.wexy.mbean.MBeanRepo;
 import rexy.module.wexy.mbean.RexyQueryBuilder;
 import rexy.module.wexy.model.Template;
+import rexy.module.wexy.model.input.Input;
 
+import javax.management.MBeanInfo;
 import javax.management.ObjectInstance;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
+import static rexy.module.wexy.actions.endpoint.InputFactory.createInput;
 
 public class EndpointAction extends WexyAction {
 	
@@ -54,19 +58,23 @@ public class EndpointAction extends WexyAction {
 	private Tab<Module> createTab(ObjectInstance objectInstance, Set<ObjectInstance> objectInstances) {
 		String name = objectInstance.getObjectName().getKeyProperty("name");
 		
+		MBeanInfo info = mBeanRepo.getInfo(objectInstance);
+		List<Input> inputs = stream(info.getAttributes())
+				.map(mbai -> createInput(objectInstance, mbai, mBeanRepo.getAttributeValue(objectInstance, mbai)))
+				.collect(toList());
+		
 		if (name.equals("mock")) {
 			List<ObjectInstance> presets = objectInstances.stream()
 					.filter(oi -> "preset".equals(oi.getObjectName().getKeyProperty("component")))
 					.collect(toList());
 			
-			
-			MockModule module = new MockModule(objectInstance, mBeanRepo.getInfo(objectInstance), presets);
+			MockModule module = new MockModule(objectInstance, info, inputs, presets);
 			Tab<Module> tab = new Tab<>(name, module);
 			tab.setActive();
 			return tab;
 		}
-
-		return new Tab<>(name, new Module(objectInstance, mBeanRepo.getInfo(objectInstance)));
+		
+		return new Tab<>(name, new Module(objectInstance, info, inputs));
 	}
 	
 }

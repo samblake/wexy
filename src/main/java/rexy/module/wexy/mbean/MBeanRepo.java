@@ -1,6 +1,7 @@
 package rexy.module.wexy.mbean;
 
 import javax.management.JMException;
+import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
@@ -28,4 +29,12 @@ public class MBeanRepo {
 		}
 	}
 	
+	public Object getAttributeValue(ObjectInstance oi, MBeanAttributeInfo mbai) {
+		try {
+			return server.getAttribute(oi.getObjectName(), mbai.getName());
+		}
+		catch (JMException e) {
+			throw new RuntimeException("Could not get attriute value", e);
+		}
+	}
 }
