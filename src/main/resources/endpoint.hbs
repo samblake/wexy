@@ -59,7 +59,7 @@
             <div class="column is-12">
 
                 <div class="card">
-                    <div class="card-header tabs is-centered is-toggle is-medium">
+                    <div class="card-header tabs is-centered is-toggle is-medium is-primary">
                         <ul>
                             {{#tabs}}
                                 <li {{#if active}}class="is-active"{{/if}}>
@@ -107,6 +107,19 @@
                                             </div>
                                         </div>
                                     {{/inputs}}
+                                    <div class="field is-grouped is-grouped-centered is-horizontal">
+                                            <p class="control">
+                                                <a class="button">
+                                                    Reset
+                                                </a>
+                                            </p>
+                                            <p class="control">
+                                                <a class="button is-primary">
+                                                    Save
+                                                </a>
+                                            </p>
+                                    </div>
+
                                 {{/with}}
 
                             </div>

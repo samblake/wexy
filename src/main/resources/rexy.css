@@ -80,3 +80,7 @@ div.is-checkradio {
     padding-top: 5px;
     padding-bottom: 5px;
 }
+.tabs.is-primary li.is-active a {
+    background-color: #00c4a7;
+    border-color: #00c4a7;
+}
