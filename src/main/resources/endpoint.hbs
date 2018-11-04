@@ -108,16 +108,23 @@
                                         </div>
                                     {{/inputs}}
                                     <div class="field is-grouped is-grouped-centered is-horizontal">
+                                        <p class="control">
+                                            <a class="button">
+                                                Reset
+                                            </a>
+                                        </p>
+                                        {{#eq ../name  'mock'}}
                                             <p class="control">
-                                                <a class="button">
-                                                    Reset
+                                                <a class="button is-info">
+                                                    Presets...
                                                 </a>
                                             </p>
-                                            <p class="control">
-                                                <a class="button is-primary">
-                                                    Save
-                                                </a>
-                                            </p>
+                                        {{/eq}}
+                                        <p class="control">
+                                            <a class="button is-primary">
+                                                Save
+                                            </a>
+                                        </p>
                                     </div>
 
                                 {{/with}}
