@@ -2,6 +2,7 @@ package rexy.module.wexy.actions.endpoint;
 
 import com.github.jknack.handlebars.Handlebars;
 import rexy.config.model.Api;
+import rexy.config.model.Endpoint;
 import rexy.http.RexyResponse;
 import rexy.module.wexy.actions.WexyAction;
 import rexy.module.wexy.builders.BreadcrumbBuilder;
@@ -41,12 +42,16 @@ public class EndpointAction extends WexyAction {
 	
 	private RexyResponse perform(Api api, String endpointName, Set<ObjectInstance> objectInstances) {
 		try {
+			Endpoint endpoint = api.getEndpoints().stream()
+					.filter(e -> e.getName().equals(endpointName))
+					.findFirst().orElseThrow(() -> new RuntimeException("Unknown endpoint " + endpointName));
+			
 			List<Tab<Module>> tabs = objectInstances.stream()
 					.filter(oi -> oi.getObjectName().getKeyProperty("component") == null)
-					.map(oi -> createTab(oi, objectInstances))
+					.map(oi -> createTab(oi, objectInstances, endpoint))
 					.collect(toList());
 			
-			BreadcrumbBuilder breadcrumbs = createBreadcrumbs().withApi(api).withEndpoint(endpointName);
+			BreadcrumbBuilder breadcrumbs = createBreadcrumbs().withApi(api).withEndpoint(endpoint);
 			Template template = createTemplate("endpoint", breadcrumbs).with("tabs", tabs);
 			return createResponse(template);
 		}
@@ -55,7 +60,9 @@ public class EndpointAction extends WexyAction {
 		}
 	}
 	
-	private Tab<Module> createTab(ObjectInstance objectInstance, Set<ObjectInstance> objectInstances) {
+	private Tab<Module> createTab(ObjectInstance objectInstance,
+			Set<ObjectInstance> objectInstances, Endpoint endpoint) {
+		
 		String name = objectInstance.getObjectName().getKeyProperty("name");
 		
 		MBeanInfo info = mBeanRepo.getInfo(objectInstance);
@@ -64,8 +71,9 @@ public class EndpointAction extends WexyAction {
 				.collect(toList());
 		
 		if (name.equals("mock")) {
-			List<ObjectInstance> presets = objectInstances.stream()
+			List<PresetLink> presets = objectInstances.stream()
 					.filter(oi -> "preset".equals(oi.getObjectName().getKeyProperty("component")))
+					.map(oi -> new PresetLink(endpoint, oi))
 					.collect(toList());
 			
 			MockModule module = new MockModule(objectInstance, info, inputs, presets);

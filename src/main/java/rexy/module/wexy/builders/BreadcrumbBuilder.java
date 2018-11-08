@@ -84,10 +84,6 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 				return new EndpointCrumbBuilder(this, endpoint);
 			}
 			
-			public EndpointCrumbBuilder withEndpoint(String name) {
-				return new EndpointCrumbBuilder(this, name);
-			}
-			
 			public final class EndpointCrumbBuilder extends ChildCrumbBuilder {
 				
 				private final String name;
@@ -96,7 +92,7 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 					this(parent, endpoint.getName());
 				}
 				
-				public EndpointCrumbBuilder(BreadcrumbBuilder parent, String name) {
+				private EndpointCrumbBuilder(BreadcrumbBuilder parent, String name) {
 					super(parent);
 					this.name = name;
 				}
@@ -119,7 +115,7 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 				final class ModuleCrumbBuilder extends ChildCrumbBuilder {
 					private final String name;
 					
-					public ModuleCrumbBuilder(EndpointCrumbBuilder parent, String name) {
+					private ModuleCrumbBuilder(EndpointCrumbBuilder parent, String name) {
 						super(parent);
 						this.name = name;
 					}

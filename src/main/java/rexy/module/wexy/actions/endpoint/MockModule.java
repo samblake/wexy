@@ -8,12 +8,16 @@ import java.util.List;
 
 public class MockModule extends Module {
 	
-	private final List<ObjectInstance> presets;
+	private final List<PresetLink> presets;
 	
 	public MockModule(ObjectInstance objectInstance, MBeanInfo mBeanInfo,
-			List<Input> attributes, List<ObjectInstance> presets) {
+			List<Input> attributes, List<PresetLink> presets) {
 		super(objectInstance, mBeanInfo, attributes);
 		this.presets = presets;
+	}
+	
+	public List<PresetLink> getPresets() {
+		return presets;
 	}
 	
 }
