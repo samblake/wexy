@@ -16,7 +16,7 @@ public class PresetLink {
 		this.endpoint = endpoint;
 		this.preset = preset;
 		this.name = preset.getObjectName().getKeyProperty("name");
-		this.link = join(endpoint.getApi().getBaseUrl(), endpoint.getName(), name);
+		this.link = '/' + join(endpoint.getApi().getBaseUrl(), endpoint.getName());
 	}
 	
 	public String getName() {

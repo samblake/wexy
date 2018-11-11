@@ -45,4 +45,14 @@ public class MBeanRepo {
 		MBeanQueryBuilder query = new RexyQueryBuilder().withApi(api.getName()).withEndpoint(endpoint.getName());
 		return search(query);
 	}
+	
+	public void applyPreset(Endpoint endpoint, String presetName) throws JMException {
+		MBeanQueryBuilder query = new RexyQueryBuilder()
+				.withApi(endpoint.getApi().getName())
+				.withEndpoint(endpoint.getName())
+				.withComponent("preset")
+				.withName(presetName);
+		
+		server.invoke(query.build(), "set", null, null);
+	}
 }

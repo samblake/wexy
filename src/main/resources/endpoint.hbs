@@ -59,7 +59,7 @@
             {{#notification}}
                 <section class="column is-12">
                     <div class="notification {{#eq type 'success'}}is-primary{{/eq}} {{#eq type 'failure'}}is-warning{{/eq}}">
-                        <button class="delete"></button>
+                        <!--<button class="delete"></button>-->
                         {{message}}
                     </div>
                 </section>
@@ -119,55 +119,21 @@
                                             </div>
                                         {{/inputs}}
 
+                                        <input type="hidden" name="module" value="{{name}}"/>
+
                                         <div class="field is-grouped is-grouped-centered is-horizontal">
                                             <p class="control">
-                                                <a class="button">
+                                                <a class="button" onclick="window.location=window.location;">
                                                     Reset
                                                 </a>
                                             </p>
 
-                                            {{#eq ../name  'mock'}}
+                                            {{#eq ../name 'mock'}}
                                                 <p class="control">
                                                     <a class="button is-info modal-button" data-target="modal">
                                                         Presets...
                                                     </a>
                                                 </p>
-
-                                                <div id="modal" class="modal modal-fx-fadeInScale">
-                                                    <div class="modal-background"></div>
-                                                    <div class="modal-content">
-
-                                                        <div class="column is-12">
-
-                                                            <div class="box">
-                                                                <header class="card-header">
-                                                                    <p class="card-header-title">
-                                                                        Presets
-                                                                    </p>
-                                                                </header>
-
-                                                                <div class="content">
-                                                                    <table class="table is-fullwidth">
-                                                                        <tbody>
-                                                                        {{#presets}}
-                                                                            <tr>
-                                                                                <td width="5%"><i class="fa fa-angle-double-right"></i></td>
-                                                                                <td>{{{name}}}</td>
-                                                                                <td class="action-cell">
-                                                                                    <a class="button is-small is-primary" href="{{link}}">Set</a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        {{/presets}}
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                    <button class="modal-close is-large" aria-label="close"></button>
-                                                </div>
                                             {{/eq}}
 
                                             <p class="control">
@@ -190,6 +156,56 @@
 
         </div>
     </div>
+
+    {{#tabs}}
+        {{#with model}}
+            {{#eq name 'mock'}}
+
+                <div id="modal" class="modal modal-fx-fadeInScale">
+                    <div class="modal-background"></div>
+                    <div class="modal-content">
+
+                        <div class="column is-12">
+
+                            <div class="box">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        Presets
+                                    </p>
+                                </header>
+
+                                <div class="content">
+                                    <table class="table is-fullwidth">
+                                        <tbody>
+                                        {{#presets}}
+                                            <tr>
+                                                <td width="5%"><i class="fa fa-angle-double-right"></i></td>
+                                                <td>{{{name}}}</td>
+                                                <td class="action-cell">
+                                                    <form method="post" action="{{link}}" id="preset-{{name}}-form">
+                                                        <input type="hidden" name="module" value="mock" />
+                                                        <input type="hidden" name="preset" value="{{name}}" />
+                                                        <a class="button is-small is-primary" onclick="document.getElementById('preset-{{name}}-form').submit();">
+                                                            Apply
+                                                        </a>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        {{/presets}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+
+            {{/eq}}
+        {{/with}}
+    {{/tabs}}
 
 </div>
 

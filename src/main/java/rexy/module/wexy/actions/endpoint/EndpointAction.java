@@ -20,11 +20,10 @@ import java.util.Set;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 import static rexy.module.wexy.actions.endpoint.InputFactory.createInput;
-import static rexy.utils.Paths.join;
 
 public class EndpointAction extends AbstractEndpointAction {
 	
-	private final MBeanRepo mBeanRepo = new MBeanRepo();
+	protected final MBeanRepo mBeanRepo = new MBeanRepo();
 	
 	public EndpointAction(String baseUrl, Handlebars handlebars) {
 		super(baseUrl, handlebars);
@@ -42,15 +41,15 @@ public class EndpointAction extends AbstractEndpointAction {
 				.collect(toList());
 		
 		try {
-			return perform(params, crumbBuilder, tabs);
+			return perform(endpoint, params, crumbBuilder, tabs);
 		}
 		catch (IOException e) {
 			throw new RuntimeException("Could perform request", e);
 		}
 	}
 	
-	protected RexyResponse perform(Map<String, String> params,
-            EndpointCrumbBuilder crumbBuilder, List<Tab<Module>> tabs) throws IOException {
+	protected RexyResponse perform(Endpoint endpoint, Map<String, String> params,
+			EndpointCrumbBuilder crumbBuilder, List<Tab<Module>> tabs) throws IOException {
 		
 		Template template = createTemplate(crumbBuilder, tabs);
 		
@@ -72,7 +71,7 @@ public class EndpointAction extends AbstractEndpointAction {
 				.map(mbai -> createInput(objectInstance, mbai, mBeanRepo.getAttributeValue(objectInstance, mbai)))
 				.collect(toList());
 		
-		String action = join(new EndpointLink(endpoint).getLink(), name);
+		String action = new EndpointLink(endpoint).getLink();
 		
 		if (name.equals("mock")) {
 			List<PresetLink> presets = objectInstances.stream()

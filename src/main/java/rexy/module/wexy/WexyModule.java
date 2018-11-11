@@ -13,9 +13,10 @@ import rexy.module.ModuleAdapter;
 import rexy.module.wexy.actions.WexyAction;
 import rexy.module.wexy.actions.api.ApiAction;
 import rexy.module.wexy.actions.endpoint.EndpointAction;
-import rexy.module.wexy.actions.endpoint.ModuleAction;
+import rexy.module.wexy.actions.module.UpdateModuleAction;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -69,7 +70,7 @@ public class WexyModule extends ModuleAdapter {
 			
 			router.pattern(GET, "/:api", new ApiAction(baseUrl, handlebars, apiRoutes));
 			router.pattern(GET, "/:api/:endpoint", new EndpointAction(baseUrl, handlebars));
-			router.pattern(POST, "/:api/:endpoint/:module", new ModuleAction(baseUrl, handlebars));
+			router.pattern(POST, "/:api/:endpoint", new UpdateModuleAction(baseUrl, handlebars));
 		}
 		
 		@Override
@@ -80,10 +81,17 @@ public class WexyModule extends ModuleAdapter {
 				throw new RuntimeException("No route found for " + request.getUri());
 			}
 			else {
-				return Optional.of(route.target().perform(api, route.params()));
+				Map<String, String> params = combineParams(request, route);
+				return Optional.of(route.target().perform(api, params));
 			}
 		}
-		
+	}
+	
+	private Map<String, String> combineParams(RexyRequest request, Routed<WexyAction> route) {
+		Map<String, String> params = new HashMap<>();
+		params.putAll(route.params());
+		params.putAll(request.getParameters());
+		return params;
 	}
 	
 }
