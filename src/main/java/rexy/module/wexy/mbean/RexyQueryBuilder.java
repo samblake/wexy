@@ -31,7 +31,7 @@ public class RexyQueryBuilder extends MBeanQueryBuilder {
 			this.api = api;
 		}
 		
-		public EndpointQueryBuilder withScope(String endpoint) {
+		public EndpointQueryBuilder withEndpoint(String endpoint) {
 			return new EndpointQueryBuilder(endpoint);
 		}
 		

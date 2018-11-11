@@ -13,6 +13,7 @@ import rexy.module.ModuleAdapter;
 import rexy.module.wexy.actions.WexyAction;
 import rexy.module.wexy.actions.api.ApiAction;
 import rexy.module.wexy.actions.endpoint.EndpointAction;
+import rexy.module.wexy.actions.endpoint.ModuleAction;
 
 import java.io.IOException;
 import java.util.Map;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 import static java.util.Collections.singletonList;
 import static rexy.http.Method.GET;
+import static rexy.http.Method.POST;
 import static rexy.utils.Json.intValue;
 import static rexy.utils.Json.stringValue;
 
@@ -67,6 +69,7 @@ public class WexyModule extends ModuleAdapter {
 			
 			router.pattern(GET, "/:api", new ApiAction(baseUrl, handlebars, apiRoutes));
 			router.pattern(GET, "/:api/:endpoint", new EndpointAction(baseUrl, handlebars));
+			router.pattern(POST, "/:api/:endpoint/:module", new ModuleAction(baseUrl, handlebars));
 		}
 		
 		@Override

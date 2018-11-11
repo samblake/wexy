@@ -16,7 +16,6 @@
 
 <body>
 
-<!-- START NAV -->
 <nav class="navbar is-white">
     <div class="container">
         <div class="navbar-brand">
@@ -26,7 +25,7 @@
         </div>
     </div>
 </nav>
-<!-- END NAV -->
+
 <div class="container">
     <div class="columns">
         <div class="column is-12">
@@ -37,6 +36,7 @@
                     {{/crumbs}}
                 </ul>
             </nav>
+
             <section class="hero is-info welcome is-small">
                 <div class="hero-body">
                     <div class="container">
@@ -49,6 +49,15 @@
                     </div>
                 </div>
             </section>
+
+            {{#if notification}}
+                <section class="column is-12">
+                    <div class="notification {{#eq type 'SUCCESS'}}is-primary{{/eq}} {{#eq type 'FAILURE'}}is-warning{{/eq}}">
+                        <button class="delete"></button>
+                        {{message}}
+                    </div>
+                </section>
+            {{/if}}
 
             <div class="columns">
 

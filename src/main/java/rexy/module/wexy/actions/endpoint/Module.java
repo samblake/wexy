@@ -11,15 +11,20 @@ public class Module {
 	private final ObjectInstance objectInstance;
 	private final MBeanInfo mBeanInfo;
 	private final List<Input> attributes;
+	private final String action;
 	
-	public Module(ObjectInstance objectInstance, MBeanInfo mBeanInfo, List<Input> attributes) {
+	public Module(ObjectInstance objectInstance, MBeanInfo mBeanInfo, List<Input> attributes, String action) {
 		this.objectInstance = objectInstance;
 		this.mBeanInfo = mBeanInfo;
 		this.attributes = attributes;
+		this.action = action;
 	}
 	
 	public List<Input> getInputs() {
 		return attributes;
 	}
 	
+	public String getAction() {
+		return action;
+	}
 }

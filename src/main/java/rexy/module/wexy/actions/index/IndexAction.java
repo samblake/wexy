@@ -4,16 +4,19 @@ import com.github.jknack.handlebars.Handlebars;
 import rexy.config.model.Api;
 import rexy.http.RexyHandler;
 import rexy.http.RexyResponse;
-import rexy.module.wexy.actions.AbstractApiAction;
+import rexy.module.wexy.actions.WexyAction;
 import rexy.module.wexy.model.Template;
 
 import java.io.IOException;
 import java.util.Map;
 
-public class IndexAction extends AbstractApiAction {
+public class IndexAction extends WexyAction {
+	
+	private final Map<String, RexyHandler> routes;
 	
 	public IndexAction(String baseUrl, Handlebars handlebars, Map<String, RexyHandler> routes) {
-		super(baseUrl, handlebars, routes);
+		super(baseUrl, handlebars);
+		this.routes = routes;
 	}
 	
 	@Override
@@ -24,7 +27,7 @@ public class IndexAction extends AbstractApiAction {
 	public RexyResponse perform() {
 		try {
 			Template template = createTemplate("index", createBreadcrumbs())
-					.with("apis", getApiLinks());
+					.with("apis", ApiLink.fromRoutes(routes));
 			
 			return createResponse(template);
 		}

@@ -1,6 +1,12 @@
 package rexy.module.wexy.actions.index;
 
 import rexy.config.model.Api;
+import rexy.http.RexyHandler;
+
+import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 public class ApiLink {
 	private final Api api;
@@ -17,6 +23,13 @@ public class ApiLink {
 	
 	public String getLink() {
 		return link;
+	}
+	
+	public static List<ApiLink> fromRoutes(Map<String, RexyHandler> routes) {
+		return routes.entrySet().stream()
+				.map(e -> new ApiLink(e.getValue().getApi(), e.getKey()))
+				.collect(toList());
+		
 	}
 
 }

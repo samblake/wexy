@@ -10,7 +10,7 @@ public class EndpointLink {
 	
 	public EndpointLink(Endpoint endpoint) {
 		this.endpoint = endpoint;
-		this.link = join(endpoint.getApi().getBaseUrl(), endpoint.getName());
+		this.link = join("/", endpoint.getApi().getBaseUrl(), endpoint.getName());
 	}
 	
 	public Endpoint getEndpoint() {

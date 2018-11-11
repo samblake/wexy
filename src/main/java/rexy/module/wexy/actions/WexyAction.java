@@ -13,8 +13,13 @@ import java.util.Map;
 
 import static fi.iki.elonen.NanoHTTPD.MIME_HTML;
 import static java.util.Collections.emptyMap;
+import static java.util.Collections.singletonMap;
 
 public abstract class WexyAction {
+	
+	private static final int REDIRECT = 301;
+	private static final String HTML = "text/html";
+	private static final byte[] BODY = new byte[0];
 	
 	protected final String baseUrl;
 	private final Handlebars handlebars;
@@ -37,6 +42,10 @@ public abstract class WexyAction {
 	
 	protected HomeCrumbBuilder createBreadcrumbs() {
 		return new HomeCrumbBuilder(baseUrl);
+	}
+	
+	protected RexyResponse createRedirect(String location) {
+		return new RexyResponse(REDIRECT, singletonMap("Location", location), HTML, BODY);
 	}
 	
 }

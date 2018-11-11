@@ -11,8 +11,8 @@ public class MockModule extends Module {
 	private final List<PresetLink> presets;
 	
 	public MockModule(ObjectInstance objectInstance, MBeanInfo mBeanInfo,
-			List<Input> attributes, List<PresetLink> presets) {
-		super(objectInstance, mBeanInfo, attributes);
+	                  List<Input> attributes, String action, List<PresetLink> presets) {
+		super(objectInstance, mBeanInfo, attributes, action);
 		this.presets = presets;
 	}
 	

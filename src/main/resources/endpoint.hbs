@@ -22,7 +22,6 @@
 
 <body>
 
-<!-- START NAV -->
 <nav class="navbar is-white">
     <div class="container">
         <div class="navbar-brand">
@@ -32,7 +31,7 @@
         </div>
     </div>
 </nav>
-<!-- END NAV -->
+
 <div class="container">
     <div class="columns">
         <div class="column is-12">
@@ -57,6 +56,15 @@
                 </div>
             </section>
 
+            {{#notification}}
+                <section class="column is-12">
+                    <div class="notification {{#eq type 'success'}}is-primary{{/eq}} {{#eq type 'failure'}}is-warning{{/eq}}">
+                        <button class="delete"></button>
+                        {{message}}
+                    </div>
+                </section>
+            {{/notification}}
+
             <div class="column is-12">
 
                 <div class="card">
@@ -75,15 +83,17 @@
                             <div {{#unless active}}class="is-hidden"{{/unless}}>
 
                                 {{#with model}}
-                                    {{#inputs}}
-                                        <div class="field is-horizontal">
-                                            <div class="field-label is-normal">
-                                                <label class="label" for="{{name}}-input">{{label}}</label>
-                                            </div>
-                                            <div class="field-body">
-                                                <div class="field">
-                                                    {{#eq type 'json'}}
-                                                        <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
+                                    <form method="post" action="{{action}}" id="{{name}}-form">
+
+                                        {{#inputs}}
+                                            <div class="field is-horizontal">
+                                                <div class="field-label is-normal">
+                                                    <label class="label" for="{{name}}-input">{{label}}</label>
+                                                </div>
+                                                <div class="field-body">
+                                                    <div class="field">
+                                                        {{#eq type 'json'}}
+                                                            <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
 <!--
 <div class="input">
 <pre><code class="json">{
@@ -91,80 +101,83 @@
 }</code></pre>
 </div>
 -->
-                                                    {{/eq}}
-                                                    {{#eq type 'checkbox'}}
-                                                        <div class="is-checkradio">
-                                                            <input class="is-checkradio is-info is-ltr" name="{{name}}" id="{{name}}-input" type="checkbox" {{#if disabled}}disabled="disabled"{{/if}} checked="{{value}}"/>
-                                                            <label for="{{name}}-input"/>
-                                                        </div>
-                                                    {{/eq}}
-                                                    {{#eq type 'number'}}
-                                                        <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
-                                                    {{/eq}}
-                                                    {{#eq type 'text'}}
-                                                        <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
-                                                    {{/eq}}
+                                                        {{/eq}}
+                                                        {{#eq type 'checkbox'}}
+                                                            <div class="is-checkradio">
+                                                                <input class="is-checkradio is-info is-ltr" name="{{name}}" id="{{name}}-input" type="checkbox" {{#if disabled}}disabled="disabled"{{/if}} checked="{{value}}"/>
+                                                                <label for="{{name}}-input"/>
+                                                            </div>
+                                                        {{/eq}}
+                                                        {{#eq type 'number'}}
+                                                            <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
+                                                        {{/eq}}
+                                                        {{#eq type 'text'}}
+                                                            <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
+                                                        {{/eq}}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    {{/inputs}}
-                                    <div class="field is-grouped is-grouped-centered is-horizontal">
-                                        <p class="control">
-                                            <a class="button">
-                                                Reset
-                                            </a>
-                                        </p>
-                                        {{#eq ../name  'mock'}}
+                                        {{/inputs}}
+
+                                        <div class="field is-grouped is-grouped-centered is-horizontal">
                                             <p class="control">
-                                                <a class="button is-info modal-button" data-target="modal">
-                                                    Presets...
+                                                <a class="button">
+                                                    Reset
                                                 </a>
                                             </p>
 
-                                            <div id="modal" class="modal modal-fx-fadeInScale">
-                                                <div class="modal-background"></div>
-                                                <div class="modal-content">
+                                            {{#eq ../name  'mock'}}
+                                                <p class="control">
+                                                    <a class="button is-info modal-button" data-target="modal">
+                                                        Presets...
+                                                    </a>
+                                                </p>
 
-                                                    <div class="column is-12">
+                                                <div id="modal" class="modal modal-fx-fadeInScale">
+                                                    <div class="modal-background"></div>
+                                                    <div class="modal-content">
 
-                                                        <div class="box">
-                                                            <header class="card-header">
-                                                                <p class="card-header-title">
-                                                                    Presets
-                                                                </p>
-                                                            </header>
+                                                        <div class="column is-12">
 
-                                                            <div class="content">
-                                                                <table class="table is-fullwidth">
-                                                                    <tbody>
-                                                                    {{#presets}}
-                                                                        <tr>
-                                                                            <td width="5%"><i class="fa fa-angle-double-right"></i></td>
-                                                                            <td>{{{name}}}</td>
-                                                                            <td class="action-cell">
-                                                                                <a class="button is-small is-primary" href="{{link}}">Set</a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    {{/presets}}
-                                                                    </tbody>
-                                                                </table>
+                                                            <div class="box">
+                                                                <header class="card-header">
+                                                                    <p class="card-header-title">
+                                                                        Presets
+                                                                    </p>
+                                                                </header>
+
+                                                                <div class="content">
+                                                                    <table class="table is-fullwidth">
+                                                                        <tbody>
+                                                                        {{#presets}}
+                                                                            <tr>
+                                                                                <td width="5%"><i class="fa fa-angle-double-right"></i></td>
+                                                                                <td>{{{name}}}</td>
+                                                                                <td class="action-cell">
+                                                                                    <a class="button is-small is-primary" href="{{link}}">Set</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        {{/presets}}
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
+
                                                         </div>
 
                                                     </div>
-
+                                                    <button class="modal-close is-large" aria-label="close"></button>
                                                 </div>
-                                                <button class="modal-close is-large" aria-label="close"></button>
-                                            </div>
+                                            {{/eq}}
 
-                                        {{/eq}}
-                                        <p class="control">
-                                            <a class="button is-primary">
-                                                Save
-                                            </a>
-                                        </p>
-                                    </div>
+                                            <p class="control">
+                                                <a class="button is-primary" onclick="document.getElementById('{{name}}-form').submit();">
+                                                    Save
+                                                </a>
+                                            </p>
+                                        </div>
 
+                                    </form>
                                 {{/with}}
 
                             </div>

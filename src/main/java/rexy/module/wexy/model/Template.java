@@ -21,6 +21,10 @@ public class Template {
 		return this;
 	}
 	
+	public Template withNotification(Notification notification) {
+		return with("notification", notification);
+	}
+	
 	public String apply() throws IOException {
 		return template.apply(model);
 	}

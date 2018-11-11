@@ -1,5 +1,8 @@
 package rexy.module.wexy.mbean;
 
+import rexy.config.model.Api;
+import rexy.config.model.Endpoint;
+
 import javax.management.JMException;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanInfo;
@@ -36,5 +39,10 @@ public class MBeanRepo {
 		catch (JMException e) {
 			throw new RuntimeException("Could not get attriute value", e);
 		}
+	}
+	
+	public Set<ObjectInstance> findForEndpoint(Api api, Endpoint endpoint) {
+		MBeanQueryBuilder query = new RexyQueryBuilder().withApi(api.getName()).withEndpoint(endpoint.getName());
+		return search(query);
 	}
 }
