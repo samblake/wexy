@@ -37,7 +37,7 @@ public abstract class WexyAction {
 	}
 	
 	protected Template createTemplate(String name, Builder<Breadcrumbs> breadcrumbs) throws IOException {
-		return new Template(handlebars, name).with("crumbs", breadcrumbs.build());
+		return new Template(handlebars, name).withBreadcrumbs(breadcrumbs.build());
 	}
 	
 	protected HomeCrumbBuilder createBreadcrumbs() {

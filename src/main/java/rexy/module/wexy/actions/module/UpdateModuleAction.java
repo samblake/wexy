@@ -1,17 +1,15 @@
 package rexy.module.wexy.actions.module;
 
 import com.github.jknack.handlebars.Handlebars;
+import rexy.config.model.Api;
 import rexy.config.model.Endpoint;
 import rexy.http.RexyResponse;
 import rexy.module.wexy.actions.endpoint.EndpointAction;
-import rexy.module.wexy.actions.endpoint.Module;
-import rexy.module.wexy.actions.endpoint.Tab;
 import rexy.module.wexy.builders.BreadcrumbBuilder.HomeCrumbBuilder.ApiCrumbBuilder.EndpointCrumbBuilder;
 import rexy.module.wexy.model.Template;
 
 import javax.management.JMException;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import static rexy.module.wexy.model.Notification.failure;
@@ -24,22 +22,27 @@ public class UpdateModuleAction extends EndpointAction {
 	}
 	
 	@Override
-	protected RexyResponse perform(Endpoint endpoint, Map<String, String> params,
-			EndpointCrumbBuilder crumbBuilder, List<Tab<Module>> tabs) throws IOException {
+	protected RexyResponse perform(Api api, Endpoint endpoint,
+			Map<String, String> params, EndpointCrumbBuilder crumbBuilder) {
 		
 		String moduleName = params.get("module");
 		String presetName = params.get("preset");
 		
-		Template template = createTemplate(crumbBuilder, tabs);
-		
-		if (presetName != null) {
-			applyPreset(endpoint, presetName, template);
+		try {
+			Template template = createTemplate("endpoint", crumbBuilder);
+			
+			if (presetName != null) {
+				applyPreset(endpoint, presetName, template);
+			}
+			else {
+				applyUpdate(params, moduleName, template);
+			}
+			
+			return createResponse(template.with("tabs", findTabs(api, endpoint)));
 		}
-		else {
-			applyUpdate(params, moduleName, template);
+		catch (IOException e) {
+			throw new RuntimeException("Could perform request", e);
 		}
-		
-		return createResponse(template);
 	}
 	
 	private void applyPreset(Endpoint endpoint, String presetName, Template template) {

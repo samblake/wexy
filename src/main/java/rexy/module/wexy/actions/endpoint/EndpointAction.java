@@ -33,32 +33,24 @@ public class EndpointAction extends AbstractEndpointAction {
 	protected RexyResponse perform(Api api, Endpoint endpoint,
 			Map<String, String> params, EndpointCrumbBuilder crumbBuilder) {
 		
-		Set<ObjectInstance> results = mBeanRepo.findForEndpoint(api, endpoint);
-		
-		List<Tab<Module>> tabs = results.stream()
-				.filter(oi -> oi.getObjectName().getKeyProperty("component") == null)
-				.map(oi -> createTab(oi, results, endpoint))
-				.collect(toList());
-		
 		try {
-			return perform(endpoint, params, crumbBuilder, tabs);
+			Template template = createTemplate("endpoint", crumbBuilder)
+					.with("tabs", findTabs(api, endpoint));
+			
+			return createResponse(template);
 		}
 		catch (IOException e) {
 			throw new RuntimeException("Could perform request", e);
 		}
 	}
 	
-	protected RexyResponse perform(Endpoint endpoint, Map<String, String> params,
-			EndpointCrumbBuilder crumbBuilder, List<Tab<Module>> tabs) throws IOException {
+	protected List<Tab<Module>> findTabs(Api api, Endpoint endpoint) {
+		Set<ObjectInstance> results = mBeanRepo.findForEndpoint(api, endpoint);
 		
-		Template template = createTemplate(crumbBuilder, tabs);
-		
-		return createResponse(template);
-	}
-	
-	protected Template createTemplate(EndpointCrumbBuilder crumbBuilder, List<Tab<Module>> tabs) throws IOException {
-		return createTemplate("endpoint", crumbBuilder)
-					.with("tabs", tabs);
+		return results.stream()
+				.filter(oi -> oi.getObjectName().getKeyProperty("component") == null)
+				.map(oi -> createTab(oi, results, endpoint))
+				.collect(toList());
 	}
 	
 	private Tab<Module> createTab(ObjectInstance objectInstance,

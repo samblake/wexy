@@ -21,6 +21,10 @@ public class Template {
 		return this;
 	}
 	
+	public Template withBreadcrumbs(Breadcrumbs crumbs) {
+		return with("crumbs", crumbs);
+	}
+	
 	public Template withNotification(Notification notification) {
 		return with("notification", notification);
 	}
