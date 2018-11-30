@@ -35,7 +35,7 @@ public class UpdateModuleAction extends EndpointAction {
 				applyPreset(endpoint, presetName, template);
 			}
 			else {
-				applyUpdate(params, moduleName, template);
+				applyUpdate(endpoint, params, moduleName, template);
 			}
 			
 			return createResponse(template.with("tabs", findTabs(api, endpoint)));
@@ -54,22 +54,17 @@ public class UpdateModuleAction extends EndpointAction {
 		catch (JMException e) {
 			template.withNotification(failure("The %s preset could not be applied: %s", presetName, e.getMessage()));
 		}
-		catch (Exception e) {
-			template.withNotification(failure("The %s preset could not be applied", presetName));
-		}
 	}
 	
-	private void applyUpdate(Map<String, String> params, String moduleName, Template template) {
+	private void applyUpdate(Endpoint endpoint, Map<String, String> params, String moduleName, Template template) {
 		try {
 			// TODO actually update the MBean
+			mBeanRepo.updateValues(endpoint, moduleName, params);
 			
 			template.withNotification(success("The %s module has been updated", moduleName));
 		}
-		//catch (JMException e) {
-		//	template.withNotification(failure("The %s module could not be updated: %s", moduleName, e.getMessage()));
-		//}
-		catch (Exception e) {
-			template.withNotification(failure("The %s module could not be updated", moduleName));
+		catch (JMException e) {
+			template.withNotification(failure("The %s module could not be updated: %s", moduleName, e.getMessage()));
 		}
 	}
 	
