@@ -58,7 +58,6 @@ public class UpdateModuleAction extends EndpointAction {
 	
 	private void applyUpdate(Endpoint endpoint, Map<String, String> params, String moduleName, Template template) {
 		try {
-			// TODO actually update the MBean
 			mBeanRepo.updateValues(endpoint, moduleName, params);
 			
 			template.withNotification(success("The %s module has been updated", moduleName));

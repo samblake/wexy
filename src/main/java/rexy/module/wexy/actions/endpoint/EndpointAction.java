@@ -35,7 +35,8 @@ public class EndpointAction extends AbstractEndpointAction {
 		
 		try {
 			Template template = createTemplate("endpoint", crumbBuilder)
-					.with("tabs", findTabs(api, endpoint));
+					.with("tabs", findTabs(api, endpoint))
+					.with("url", generateUrl(api, endpoint));
 			
 			return createResponse(template);
 		}
@@ -63,22 +64,31 @@ public class EndpointAction extends AbstractEndpointAction {
 				.map(mbai -> createInput(objectInstance, mbai, mBeanRepo.getAttributeValue(objectInstance, mbai)))
 				.collect(toList());
 		
-		String action = new EndpointLink(endpoint).getLink();
-		
 		if (name.equals("mock")) {
-			List<PresetLink> presets = objectInstances.stream()
-					.filter(oi -> "preset".equals(oi.getObjectName().getKeyProperty("component")))
-					.map(oi -> new PresetLink(endpoint, oi))
-					.collect(toList());
-			
-			
-			MockModule module = new MockModule(objectInstance, info, inputs, action, presets);
-			Tab<Module> tab = new Tab<>(name, module);
-			tab.setActive();
-			return tab;
+			return createMockTab(objectInstance, objectInstances, endpoint, name, info, inputs);
 		}
 		
+		String action = new EndpointLink(endpoint).getLink();
 		return new Tab<>(name, new Module(objectInstance, info, inputs, action));
+	}
+	
+	private Tab<Module> createMockTab(ObjectInstance objectInstance, Set<ObjectInstance> objectInstances,
+			Endpoint endpoint, String name, MBeanInfo info, List<Input> inputs) {
+		
+		List<PresetLink> presets = objectInstances.stream()
+				.filter(oi -> "preset".equals(oi.getObjectName().getKeyProperty("component")))
+				.map(oi -> new PresetLink(endpoint, oi))
+				.collect(toList());
+		
+		String action = new EndpointLink(endpoint).getLink();
+		MockModule module = new MockModule(objectInstance, info, inputs, action, presets);
+		Tab<Module> tab = new Tab<>(name, module);
+		tab.setActive();
+		return tab;
+	}
+	
+	private String generateUrl(Api api, Endpoint endpoint) {
+		return baseUrl + api.getBaseUrl() + endpoint.getEndpoint();
 	}
 	
 }

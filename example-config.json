@@ -30,10 +30,6 @@
             {
               "name": "Successful",
               "httpStatus": 200,
-              "headers": {
-                "abc": "Test 1",
-                "xyz": "Test 2"
-              },
               "body": {
                 "title": "London",
                 "location_type": "City",
@@ -47,6 +43,82 @@
               "body": {
                 "error": "invalid request"
               }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "chucknorris",
+      "baseUrl": "chucknorris",
+      "contentType": "application/json",
+      "proxy": "https://api.chucknorris.io",
+      "endpoints": [
+        {
+          "name": "joke",
+          "endpoint": "/jokes/random",
+          "responses": [
+            {
+              "name": "Successful",
+              "httpStatus": 200,
+              "body": {
+                "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
+                "id": "g6Tk9tCFQpeqqxY2Rh-sTw",
+                "url": "https://api.chucknorris.io/jokes/g6Tk9tCFQpeqqxY2Rh-sTw",
+                "value": "Phobias are afraid of Chuck Norris."
+              }
+            }
+          ]
+        },
+        {
+          "name": "category joke",
+          "endpoint": "/jokes/random?category={category}",
+          "responses": [
+            {
+              "name": "Successful",
+              "httpStatus": 200,
+              "body": {
+                "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
+                "id": "g6Tk9tCFQpeqqxY2Rh-sTw",
+                "url": "https://api.chucknorris.io/jokes/g6Tk9tCFQpeqqxY2Rh-sTw",
+                "value": "Phobias are afraid of Chuck Norris."
+              }
+            },
+            {
+              "name": "Error",
+              "httpStatus": 404,
+              "headers": {
+                "content-type": "text/html; charset=UTF-8"
+              },
+              "body": {}
+            }
+          ]
+        },
+        {
+          "name": "categories",
+          "endpoint": "/jokes/categories",
+          "responses": [
+            {
+              "name": "Successful",
+              "httpStatus": 200,
+              "body": [
+                "explicit",
+                "dev",
+                "movie",
+                "food",
+                "celebrity",
+                "science",
+                "sport",
+                "political",
+                "religion",
+                "animal",
+                "history",
+                "music",
+                "travel",
+                "career",
+                "money",
+                "fashion"
+              ]
             }
           ]
         }
