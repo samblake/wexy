@@ -20,6 +20,9 @@ nav.navbar {
   margin-bottom: 2rem;
   padding-bottom: 0.5rem;
 }
+.card.bar {
+  padding-bottom: 0rem;
+}
 .card-header-title {
   color: #8F99A3;
   font-weight: 400;
