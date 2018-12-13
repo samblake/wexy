@@ -34,15 +34,19 @@ public class EndpointAction extends AbstractEndpointAction {
 			Map<String, String> params, EndpointCrumbBuilder crumbBuilder) {
 		
 		try {
-			Template template = createTemplate("endpoint", crumbBuilder)
-					.with("tabs", findTabs(api, endpoint))
-					.with("url", generateUrl(api, endpoint));
+			Template template = createTemplate("endpoint", crumbBuilder);
 			
-			return createResponse(template);
+			return createResponse(template, api, endpoint);
 		}
 		catch (IOException e) {
 			throw new RuntimeException("Could perform request", e);
 		}
+	}
+	
+	protected RexyResponse createResponse(Template template, Api api, Endpoint endpoint) throws IOException {
+		return createResponse(template
+				.with("tabs", findTabs(api, endpoint))
+				.with("url", generateUrl(api, endpoint)));
 	}
 	
 	protected List<Tab<Module>> findTabs(Api api, Endpoint endpoint) {

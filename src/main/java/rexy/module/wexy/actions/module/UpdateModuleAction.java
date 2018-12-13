@@ -38,7 +38,7 @@ public class UpdateModuleAction extends EndpointAction {
 				applyUpdate(endpoint, params, moduleName, template);
 			}
 			
-			return createResponse(template.with("tabs", findTabs(api, endpoint)));
+			return createResponse(template, api, endpoint);
 		}
 		catch (IOException e) {
 			throw new RuntimeException("Could perform request", e);
