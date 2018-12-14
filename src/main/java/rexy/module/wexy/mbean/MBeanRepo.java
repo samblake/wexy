@@ -74,7 +74,7 @@ public class MBeanRepo {
 		MBeanInfo info = server.getMBeanInfo(objectName);
 		AttributeList attributes = new AttributeList(info.getAttributes().length);
 		for (MBeanAttributeInfo attributeInfo : info.getAttributes()) {
-			String param = params.get(attributeInfo.getName()).trim();
+			String param = params.getOrDefault(attributeInfo.getName(), "").trim();
 			Object value = basicTypeConverter.convert(param, attributeInfo.getType());
 			attributes.add(new Attribute(attributeInfo.getName(), value));
 		}

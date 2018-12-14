@@ -1,5 +1,6 @@
 package rexy.module.wexy.mbean.converters;
 
+import static java.lang.Boolean.parseBoolean;
 import static java.lang.Byte.parseByte;
 import static java.lang.Double.parseDouble;
 import static java.lang.Float.parseFloat;
@@ -29,7 +30,7 @@ public class BasicTypeConverter implements TypeConverter<Object> {
 		
 		// Handle primatives
 		switch (type) {
-			case "boolean": return value != null;
+			case "boolean": return parseBoolean(value);
 			case "byte": return parseByte(value);
 			case "short": return parseShort(value);
 			case "int": return parseInt(value);

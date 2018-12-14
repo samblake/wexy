@@ -109,7 +109,7 @@
                                                         {{/eq}}
                                                         {{#eq type 'checkbox'}}
                                                             <div class="is-checkradio">
-                                                                <input class="is-checkradio is-info is-ltr" name="{{name}}" id="{{name}}-input" type="checkbox" {{#if disabled}}disabled="disabled"{{/if}} checked="{{value}}"/>
+                                                                <input class="is-checkradio is-info is-ltr" name="{{name}}" id="{{name}}-input" type="checkbox" value="true" {{#if disabled}}disabled="disabled"{{/if}} {{#if value}}checked="checked"{{/if}}/>
                                                                 <label for="{{name}}-input"/>
                                                             </div>
                                                         {{/eq}}
