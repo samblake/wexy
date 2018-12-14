@@ -36,26 +36,39 @@ public class EndpointAction extends AbstractEndpointAction {
 		try {
 			Template template = createTemplate("endpoint", crumbBuilder);
 			
-			return createResponse(template, api, endpoint);
+			return createResponse(template, api, endpoint, "mock");
 		}
 		catch (IOException e) {
 			throw new RuntimeException("Could perform request", e);
 		}
 	}
 	
-	protected RexyResponse createResponse(Template template, Api api, Endpoint endpoint) throws IOException {
+	protected RexyResponse createResponse(Template template,
+			Api api, Endpoint endpoint, String activeModule) throws IOException {
 		return createResponse(template
-				.with("tabs", findTabs(api, endpoint))
+				.with("tabs", findTabs(api, endpoint, activeModule))
 				.with("url", generateUrl(api, endpoint)));
 	}
 	
-	protected List<Tab<Module>> findTabs(Api api, Endpoint endpoint) {
+	protected List<Tab<Module>> findTabs(Api api, Endpoint endpoint, String activeModule) {
 		Set<ObjectInstance> results = mBeanRepo.findForEndpoint(api, endpoint);
 		
 		return results.stream()
 				.filter(oi -> oi.getObjectName().getKeyProperty("component") == null)
-				.map(oi -> createTab(oi, results, endpoint))
+				.map(oi -> createTab(oi, results, endpoint, activeModule))
 				.collect(toList());
+	}
+	
+	private Tab<Module> createTab(ObjectInstance objectInstance,
+			Set<ObjectInstance> objectInstances, Endpoint endpoint, String activeModule) {
+		
+		Tab<Module> tab = createTab(objectInstance, objectInstances, endpoint);
+		
+		if (tab.getId().equals(activeModule)) {
+			tab.setActive();
+		}
+		
+		return tab;
 	}
 	
 	private Tab<Module> createTab(ObjectInstance objectInstance,
@@ -86,9 +99,7 @@ public class EndpointAction extends AbstractEndpointAction {
 		
 		String action = new EndpointLink(endpoint).getLink();
 		MockModule module = new MockModule(objectInstance, info, inputs, action, presets);
-		Tab<Module> tab = new Tab<>(name, module);
-		tab.setActive();
-		return tab;
+		return new Tab<>(name, module);
 	}
 	
 	private String generateUrl(Api api, Endpoint endpoint) {
