@@ -34,7 +34,7 @@ public class UpdateModuleAction extends EndpointAction {
 			if (presetName != null) {
 				applyPreset(endpoint, presetName, template);
 			}
-			else {
+			else if (params.size() > 3) {
 				applyUpdate(endpoint, params, moduleName, template);
 			}
 			

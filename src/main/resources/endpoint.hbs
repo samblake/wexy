@@ -126,9 +126,14 @@
 
                                         <input type="hidden" name="module" value="{{name}}"/>
 
+                                    </form>
+
+                                    <form method="post" action="{{action}}" id="{{name}}-reset">
+                                        <input type="hidden" name="module" value="{{name}}"/>
+
                                         <div class="field is-grouped is-grouped-centered is-horizontal">
                                             <p class="control">
-                                                <a class="button" onclick="window.location=window.location;">
+                                                <a class="button" onclick="document.getElementById('{{name}}-reset').submit();">
                                                     Reset
                                                 </a>
                                             </p>
@@ -147,7 +152,6 @@
                                                 </a>
                                             </p>
                                         </div>
-
                                     </form>
                                 {{/with}}
 
