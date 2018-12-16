@@ -6,12 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Rexy</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/3.0.0-beta.1/cash.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/rexy.css"/>
-    <script src="/rexy.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/json.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css"/>
@@ -19,6 +18,8 @@
     <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bulma-toast/dist/bulma-toast.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/rexy.css"/>
+    <script src="/rexy.js"></script>
 
     <script>
         hljs.initHighlightingOnLoad();
@@ -51,3 +52,14 @@
         </div>
     </div>
 </nav>
+
+<div class="container">
+    {{#block "content"}}
+    {{/block}}
+</div>
+
+</body>
+
+<script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.js"></script>
+
+</html>

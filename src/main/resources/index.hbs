@@ -1,6 +1,5 @@
-{{> includes/header}}
 
-<div class="container">
+{{#partial "content"}}
     <div class="columns">
         <div class="column is-12">
 
@@ -21,15 +20,15 @@
                         <div class="content">
                             <table class="table is-fullwidth is-striped">
                                 <tbody>
-                                    {{#apis}}
-                                        <tr>
-                                            <td width="5%"><i class="fa fa-angle-double-right"></i></td>
-                                            {{#with api}}<td>{{{name}}}</td>{{/with}}
-                                            <td class="action-cell">
-                                                <a class="button is-small is-primary" href="{{link}}">Select</a>
-                                            </td>
-                                        </tr>
-                                    {{/apis}}
+                                {{#apis}}
+                                    <tr>
+                                        <td width="5%"><i class="fa fa-angle-double-right"></i></td>
+                                        {{#with api}}<td>{{{name}}}</td>{{/with}}
+                                        <td class="action-cell">
+                                            <a class="button is-small is-primary" href="{{link}}">Select</a>
+                                        </td>
+                                    </tr>
+                                {{/apis}}
                                 </tbody>
                             </table>
                         </div>
@@ -40,6 +39,6 @@
             </div>
         </div>
     </div>
-</div>
+{{/partial}}
 
-{{> includes/footer}}
+{{> layout}}
