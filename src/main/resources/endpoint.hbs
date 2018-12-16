@@ -1,228 +1,161 @@
-<!DOCTYPE html>
-<html>
+{{> header}}
 
-<head>
-    <meta charset="utf-8/">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Rexy</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/3.0.0-beta.1/cash.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/rexy.css"/>
-    <script src="/rexy.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/json.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-checkradio@2.1.0/dist/css/bulma-checkradio.min.css"/>
-    <link  rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bulma-toast/dist/bulma-toast.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
-    <script>hljs.initHighlightingOnLoad();</script>
-</head>
+<div class="columns">
+    <div class="column is-12">
 
-<body>
+        {{> crumbs}}
 
-<nav class="navbar is-white">
-    <div class="container">
-        <div class="navbar-brand">
-            <span class="navbar-item brand-text">
-                <a href="https://github.com/samblake/rexy/">Rexy</a>
-            </span>
-        </div>
-    </div>
-</nav>
+        {{> hero}}
 
-<div class="container">
-    <div class="columns">
         <div class="column is-12">
-
-            <nav class="breadcrumb" aria-label="breadcrumbs">
-                <ul>
-                    {{#crumbs}}
-                        <li><a href="{{link}}">{{name}}</a></li>
-                    {{/crumbs}}
-                </ul>
-            </nav>
-            <section class="hero is-info welcome is-small">
-                <div class="hero-body">
-                    <div class="container">
-                        <h1 class="title">
-                            Rexy
-                        </h1>
-                        <h2 class="subtitle">
-                            Mocking for REST endpoints
-                        </h2>
-                    </div>
+            <div class="card bar">
+                <div class="card-content">
+                    {{url}}
                 </div>
-            </section>
+            </div>
 
-            <div class="column is-12">
-                <div class="card bar">
-                    <div class="card-content">
-                        {{url}}
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header tabs is-centered is-toggle is-medium is-primary">
-                        <ul>
-                            {{#tabs}}
-                                <li {{#if active}}class="is-active"{{/if}}>
-                                    <a>{{name}}</a>
-                                </li>
-                            {{/tabs}}
-                        </ul>
-                    </div>
-
-                    <div id="tabs" class="content">
+            <div class="card">
+                <div class="card-header tabs is-centered is-toggle is-medium is-primary">
+                    <ul>
                         {{#tabs}}
-                            <div {{#unless active}}class="is-hidden"{{/unless}}>
+                            <li {{#if active}}class="is-active"{{/if}}>
+                                <a>{{name}}</a>
+                            </li>
+                        {{/tabs}}
+                    </ul>
+                </div>
 
-                                {{#with model}}
-                                    <form method="post" action="{{action}}" id="{{name}}-form">
+                <div id="tabs" class="content">
+                    {{#tabs}}
+                        <div {{#unless active}}class="is-hidden"{{/unless}}>
 
-                                        {{#inputs}}
-                                            <div class="field is-horizontal">
-                                                <div class="field-label is-normal">
-                                                    <label class="label" for="{{name}}-input">{{label}}</label>
-                                                </div>
-                                                <div class="field-body">
-                                                    <div class="field">
-                                                        {{#eq type 'json'}}
-                                                            <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
+                            {{#with model}}
+                                <form method="post" action="{{action}}" id="{{name}}-form">
+
+                                    {{#inputs}}
+                                        <div class="field is-horizontal">
+                                            <div class="field-label is-normal">
+                                                <label class="label" for="{{name}}-input">{{label}}</label>
+                                            </div>
+                                            <div class="field-body">
+                                                <div class="field">
+                                                    {{#eq type 'json'}}
+                                                        <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
 <!--
 <div class="input">
 <pre><code class="json">{
-    "abc": [1,2,3]
+"abc": [1,2,3]
 }</code></pre>
 </div>
 -->
-                                                        {{/eq}}
-                                                        {{#eq type 'checkbox'}}
-                                                            <div class="is-checkradio">
-                                                                <input class="is-checkradio is-info is-ltr" name="{{name}}" id="{{name}}-input" type="checkbox" value="true" {{#if disabled}}disabled="disabled"{{/if}} {{#if value}}checked="checked"{{/if}}/>
-                                                                <label for="{{name}}-input"/>
-                                                            </div>
-                                                        {{/eq}}
-                                                        {{#eq type 'number'}}
-                                                            <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
-                                                        {{/eq}}
-                                                        {{#eq type 'text'}}
-                                                            <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
-                                                        {{/eq}}
-                                                    </div>
+                                                    {{/eq}}
+                                                    {{#eq type 'checkbox'}}
+                                                        <div class="is-checkradio">
+                                                            <input class="is-checkradio is-info is-ltr" name="{{name}}" id="{{name}}-input" type="checkbox" value="true" {{#if disabled}}disabled="disabled"{{/if}} {{#if value}}checked="checked"{{/if}}/>
+                                                            <label for="{{name}}-input"/>
+                                                        </div>
+                                                    {{/eq}}
+                                                    {{#eq type 'number'}}
+                                                        <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
+                                                    {{/eq}}
+                                                    {{#eq type 'text'}}
+                                                        <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
+                                                    {{/eq}}
                                                 </div>
                                             </div>
-                                        {{/inputs}}
-
-                                        <input type="hidden" name="module" value="{{name}}"/>
-
-                                    </form>
-
-                                    <form method="post" action="{{action}}" id="{{name}}-reset">
-                                        <input type="hidden" name="module" value="{{name}}"/>
-
-                                        <div class="field is-grouped is-grouped-centered is-horizontal">
-                                            <p class="control">
-                                                <a class="button" onclick="document.getElementById('{{name}}-reset').submit();">
-                                                    Reset
-                                                </a>
-                                            </p>
-
-                                            {{#eq ../name 'mock'}}
-                                                <p class="control">
-                                                    <a class="button is-info modal-button" data-target="modal">
-                                                        Presets...
-                                                    </a>
-                                                </p>
-                                            {{/eq}}
-
-                                            <p class="control">
-                                                <a class="button is-primary" onclick="document.getElementById('{{name}}-form').submit();">
-                                                    Save
-                                                </a>
-                                            </p>
                                         </div>
-                                    </form>
-                                {{/with}}
+                                    {{/inputs}}
 
-                            </div>
-                        {{/tabs}}
+                                    <input type="hidden" name="module" value="{{name}}"/>
 
-                    </div>
+                                </form>
+
+                                <form method="post" action="{{action}}" id="{{name}}-reset">
+                                    <input type="hidden" name="module" value="{{name}}"/>
+
+                                    <div class="field is-grouped is-grouped-centered is-horizontal">
+                                        <p class="control">
+                                            <a class="button" onclick="document.getElementById('{{name}}-reset').submit();">
+                                                Reset
+                                            </a>
+                                        </p>
+
+                                        {{#eq ../name 'mock'}}
+                                            <p class="control">
+                                                <a class="button is-info modal-button" data-target="modal">
+                                                    Presets...
+                                                </a>
+                                            </p>
+                                        {{/eq}}
+
+                                        <p class="control">
+                                            <a class="button is-primary" onclick="document.getElementById('{{name}}-form').submit();">
+                                                Save
+                                            </a>
+                                        </p>
+                                    </div>
+                                </form>
+                            {{/with}}
+
+                        </div>
+                    {{/tabs}}
+
                 </div>
-
             </div>
 
         </div>
+
     </div>
+</div>
 
-    {{#tabs}}
-        {{#with model}}
-            {{#eq name 'mock'}}
+{{#tabs}}
+    {{#with model}}
+        {{#eq name 'mock'}}
 
-                <div id="modal" class="modal modal-fx-fadeInScale">
-                    <div class="modal-background"></div>
-                    <div class="modal-content">
+            <div id="modal" class="modal modal-fx-fadeInScale">
+                <div class="modal-background"></div>
+                <div class="modal-content">
 
-                        <div class="column is-12">
+                    <div class="column is-12">
 
-                            <div class="box">
-                                <header class="card-header">
-                                    <p class="card-header-title">
-                                        Presets
-                                    </p>
-                                </header>
+                        <div class="box">
+                            <header class="card-header">
+                                <p class="card-header-title">
+                                    Presets
+                                </p>
+                            </header>
 
-                                <div class="content">
-                                    <table class="table is-fullwidth">
-                                        <tbody>
-                                        {{#presets}}
-                                            <tr>
-                                                <td width="5%"><i class="fa fa-angle-double-right"></i></td>
-                                                <td>{{{name}}}</td>
-                                                <td class="action-cell">
-                                                    <form method="post" action="{{link}}" id="preset-{{name}}-form">
-                                                        <input type="hidden" name="module" value="mock" />
-                                                        <input type="hidden" name="preset" value="{{name}}" />
-                                                        <a class="button is-small is-primary" onclick="document.getElementById('preset-{{name}}-form').submit();">
-                                                            Apply
-                                                        </a>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        {{/presets}}
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="content">
+                                <table class="table is-fullwidth">
+                                    <tbody>
+                                    {{#presets}}
+                                        <tr>
+                                            <td width="5%"><i class="fa fa-angle-double-right"></i></td>
+                                            <td>{{{name}}}</td>
+                                            <td class="action-cell">
+                                                <form method="post" action="{{link}}" id="preset-{{name}}-form">
+                                                    <input type="hidden" name="module" value="mock" />
+                                                    <input type="hidden" name="preset" value="{{name}}" />
+                                                    <a class="button is-small is-primary" onclick="document.getElementById('preset-{{name}}-form').submit();">
+                                                        Apply
+                                                    </a>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {{/presets}}
+                                    </tbody>
+                                </table>
                             </div>
-
                         </div>
 
                     </div>
-                    <button class="modal-close is-large" aria-label="close"></button>
+
                 </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
 
-            {{/eq}}
-        {{/with}}
-    {{/tabs}}
+        {{/eq}}
+    {{/with}}
+{{/tabs}}
 
-</div>
-
-{{#notification}}
-    <script language="JavaScript">
-        bulmaToast.toast({
-            message: "{{message}}",
-            type: "{{#eq type 'success'}}is-primary{{/eq}} {{#eq type 'failure'}}is-warning{{/eq}}",
-            animate: { in: 'fadeIn', out: 'fadeOut' }
-        });
-    </script>
-{{/notification}}
-
-</body>
-
-<script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.js"></script>
-
-</html>
+{{> footer}}
