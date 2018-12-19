@@ -103,8 +103,8 @@ public class EndpointAction extends AbstractEndpointAction {
 		return new Tab<>(name, module);
 	}
 	
-	private String generateUrl(Api api, Endpoint endpoint) {
-		return baseUrl + api.getBaseUrl() + endpoint.getEndpoint();
+	private Url generateUrl(Api api, Endpoint endpoint) {
+		return Url.fromUrl(baseUrl + api.getBaseUrl() + endpoint.getEndpoint());
 	}
 	
 }

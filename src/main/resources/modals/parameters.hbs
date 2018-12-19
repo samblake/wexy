@@ -1,0 +1,40 @@
+<div id="parameters" class="modal modal-fx-fadeInScale">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+
+        <div class="column is-12">
+
+            <div class="box">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Parameters
+                    </p>
+                </header>
+
+                {{#with url}}
+                    <div class="content">
+                        <table class="table is-fullwidth">
+                            <tbody>
+                            {{#parameters}}
+                                <tr>
+                                    <td width="5%"><i class="fa fa-angle-double-right"></i></td>
+                                    <td>{{{name}}}</td>
+                                    <td class="action-cell">
+                                        <input type="textbox" name="{{name}}" value="" />
+                                    </td>
+                                </tr>
+                            {{/parameters}}
+                            </tbody>
+                        </table>
+                        <a class="button is-small is-primary">
+                            Go
+                        </a>
+                    </div>
+                {{/with}}
+            </div>
+
+        </div>
+
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>

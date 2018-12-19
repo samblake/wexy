@@ -22,7 +22,7 @@ nav.navbar {
   padding-bottom: 0.5rem;
 }
 .card.bar {
-  padding-bottom: 0rem;
+  padding: 1rem;
 }
 .card-header-title {
   color: #8F99A3;
