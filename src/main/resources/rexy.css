@@ -94,15 +94,16 @@ div.is-checkradio {
 .control {
     margin-bottom: 0 !important;
 }
-.tagsinput input {
-    border-color: #dbdbdb;
-    border-width: 1px;
-    border-style: dashed;
-    padding-left: 5px;
-}
 .tagsinput {
     height: auto !important;
     padding-top: 1px !important;
+    margin-bottom: 0em !important;
+}
+.tagsinput input {
+    border-style: none;
+    outline: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 .tagsinput input, .tagsinput .tags {
     margin-top:4px;
