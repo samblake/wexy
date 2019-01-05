@@ -2,8 +2,8 @@ package rexy.module.wexy.model;
 
 import rexy.module.wexy.model.Breadcrumbs.Breadcrumb;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Consumer;
@@ -13,7 +13,7 @@ public class Breadcrumbs implements Iterable<Breadcrumb> {
 	private final List<Breadcrumb> crumbs;
 	
 	public Breadcrumbs(Breadcrumb crumb) {
-		crumbs = new LinkedList<>();
+		crumbs = new ArrayList<>();
 		crumbs.add(crumb);
 	}
 	

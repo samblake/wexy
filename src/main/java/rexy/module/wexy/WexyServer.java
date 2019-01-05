@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import rexy.http.NanoRequest;
 import rexy.http.RexyHandler;
 import rexy.http.RexyServer;
-import rexy.module.Module;
+import rexy.module.RexyModule;
 import rexy.module.wexy.actions.index.IndexAction;
 
 import java.io.InputStream;
@@ -22,13 +22,11 @@ public class WexyServer extends RexyServer {
 	
 	private static final String MIME_HTML = "text/html";
 	
-	private final String baseUrl;
 	private final IndexAction indexAction;
 	private final Handlebars handlebars;
 	
-	public WexyServer(int port, String baseUrl, List<Module> modules) {
+	public WexyServer(int port, String baseUrl, List<RexyModule> modules) {
 		super(port, baseUrl, modules);
-		this.baseUrl = baseUrl;
 		this.handlebars = new Handlebars();
 		handlebars.registerHelper(eq.name(), eq);
 		

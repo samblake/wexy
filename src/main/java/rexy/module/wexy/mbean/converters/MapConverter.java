@@ -15,9 +15,9 @@ public class MapConverter implements TypeConverter<Map<Object, Object>> {
 		// FIXME encode maps in a better way than this
 		Map<Object, Object> map = new HashMap<>();
 		if (value != null && value.contains("=")) {
-			String[] entries = value.substring(1, value.length() - 1).split(",");
+			String[] entries = value.substring(1, value.length() - 1).split(",", -1);
 			for (String entry : entries) {
-				String[] pair = entry.trim().split("=");
+				String[] pair = entry.trim().split("=", -1);
 				map.put(pair[0], pair[1]);
 			}
 		}

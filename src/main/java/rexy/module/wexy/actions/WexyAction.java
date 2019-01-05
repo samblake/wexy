@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import static fi.iki.elonen.NanoHTTPD.MIME_HTML;
+import static java.nio.charset.Charset.defaultCharset;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 
@@ -32,7 +33,7 @@ public abstract class WexyAction {
 	public abstract RexyResponse perform(Api api, Map<String, String> params);
 	
 	protected RexyResponse createResponse(Template template) throws IOException {
-		byte[] body = template.apply().getBytes();
+		byte[] body = template.apply().getBytes(defaultCharset());
 		return new RexyResponse(200, emptyMap(), MIME_HTML, body);
 	}
 	

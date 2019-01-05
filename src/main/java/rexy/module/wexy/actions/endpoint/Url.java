@@ -1,6 +1,6 @@
 package rexy.module.wexy.actions.endpoint;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +32,7 @@ public class Url {
 	
 	public static Url fromUrl(String url) {
 		Matcher matcher = PATTERN.matcher(url);
-		List<String> parameters = new LinkedList<>();
+		List<String> parameters = new ArrayList<>();
 		while (matcher.find()) {
 			parameters.add(trim(matcher.group(), 1, 1));
 		}

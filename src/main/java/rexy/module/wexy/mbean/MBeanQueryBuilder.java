@@ -8,7 +8,8 @@ import javax.management.ObjectName;
 public abstract class MBeanQueryBuilder implements Builder<ObjectName> {
 	
 	protected abstract StringBuilder getName();
-	
+
+	@Override
 	public ObjectName build() {
 		try {
 			return buildObjectName();

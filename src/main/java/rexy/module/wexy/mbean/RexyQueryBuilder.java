@@ -82,7 +82,7 @@ public class RexyQueryBuilder extends MBeanQueryBuilder {
 		
 	}
 	
-	public class NameQueryBuilder extends MBeanQueryBuilder {
+	public static class NameQueryBuilder extends MBeanQueryBuilder {
 		private final MBeanQueryBuilder parent;
 		private final String name;
 		
