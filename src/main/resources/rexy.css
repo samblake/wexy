@@ -104,6 +104,7 @@ div.is-checkradio {
     outline: none;
     padding-top: 3px;
     padding-bottom: 3px;
+    flex: 2 1 0%;
 }
 .tagsinput input, .tagsinput .tags {
     margin-top:4px;
