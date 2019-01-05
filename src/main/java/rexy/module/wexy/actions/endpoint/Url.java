@@ -30,6 +30,10 @@ public class Url {
 		return !parameters.isEmpty();
 	}
 	
+	public String getPath() {
+		return template.indexOf('?') == -1 ? template : template.substring(0, template.indexOf('?'));
+	}
+	
 	public static Url fromUrl(String url) {
 		Matcher matcher = PATTERN.matcher(url);
 		List<String> parameters = new ArrayList<>();

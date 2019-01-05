@@ -13,22 +13,28 @@
 
                 {{#with url}}
                     <div class="content">
-                        <table class="table is-fullwidth">
-                            <tbody>
+                        <form method="get" action="http://localhost:8081{{path}}" target="_blank">
+
                             {{#parameters}}
-                                <tr>
-                                    <td width="5%"><i class="fa fa-angle-double-right"></i></td>
-                                    <td>{{{name}}}</td>
-                                    <td class="action-cell">
-                                        <input type="textbox" name="{{name}}" value="" />
-                                    </td>
-                                </tr>
+                                <div class="field is-horizontal">
+                                    <div class="field-label is-normal">
+                                        <label class="label" for="{{this}}-param">{{this}}</label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <input id="{{this}}-param" type="text" class="input" name="{{this}}" value="" placeholder="{{this}}"/>
+                                        </div>
+                                    </div>
+                                </div>
                             {{/parameters}}
-                            </tbody>
-                        </table>
-                        <a class="button is-small is-primary">
-                            Go
-                        </a>
+
+                            <div class="field is-grouped is-grouped-centered is-horizontal">
+                                <p class="control">
+                                  <button class="button is-primary">Go</button>
+                                </p>
+                            </div>
+
+                        </form>
                     </div>
                 {{/with}}
             </div>

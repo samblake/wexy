@@ -111,7 +111,13 @@ div.is-checkradio {
     color: transparent;
 }
 @media screen and (min-width: 769px) {
-    .input {
+    #tabs .input {
         max-width: 90%;
     }
+}
+#parameters label, #parameters input::placeholder {
+    text-transform: capitalize;
+}
+#parameters .content {
+    margin-top: 1em;
 }
