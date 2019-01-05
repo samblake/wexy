@@ -23,23 +23,21 @@
     <script src="/rexy.js"></script>
 
     <script>
-        $(function () {
-            $(document).ready(
-                function() {
-                    hljs.initHighlightingOnLoad();
+        $(document).ready(
+            function() {
+                hljs.initHighlightingOnLoad();
 
-                    bulmaTagsinput.attach('[type="tags"]');
+                bulmaTagsinput.attach('[type="tags"]');
 
-                    {{#notification}}
-                        bulmaToast.toast({
-                            message: "{{message}}",
-                            type: "{{#eq type 'success'}}is-primary{{/eq}} {{#eq type 'failure'}}is-warning{{/eq}}",
-                            animate: { in: 'fadeIn', out: 'fadeOut' }
-                        });
-                    {{/notification}}
-                }
-            )
-        });
+                {{#notification}}
+                    bulmaToast.toast({
+                        message: "{{message}}",
+                        type: "{{#eq type 'success'}}is-primary{{/eq}} {{#eq type 'failure'}}is-warning{{/eq}}",
+                        animate: { in: 'fadeIn', out: 'fadeOut' }
+                    });
+                {{/notification}}
+            }
+        );
     </script>
 
 </head>
