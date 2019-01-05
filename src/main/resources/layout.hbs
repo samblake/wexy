@@ -18,25 +18,28 @@
     <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bulma-toast/dist/bulma-toast.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/bulma-tagsinput@2.0.0/dist/js/bulma-tagsinput.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/rexy.css"/>
     <script src="/rexy.js"></script>
 
     <script>
-        hljs.initHighlightingOnLoad();
+        $(function () {
+            $(document).ready(
+                function() {
+                    hljs.initHighlightingOnLoad();
 
-        {{#notification}}
-            $(function () {
-                $(document).ready(
-                    function() {
+                    bulmaTagsinput.attach('[type="tags"]');
+
+                    {{#notification}}
                         bulmaToast.toast({
                             message: "{{message}}",
                             type: "{{#eq type 'success'}}is-primary{{/eq}} {{#eq type 'failure'}}is-warning{{/eq}}",
                             animate: { in: 'fadeIn', out: 'fadeOut' }
                         });
-                    }
-                )
-            });
-        {{/notification}}
+                    {{/notification}}
+                }
+            )
+        });
     </script>
 
 </head>

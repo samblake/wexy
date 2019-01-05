@@ -88,3 +88,15 @@ div.is-checkradio {
     background-color: #00c4a7;
     border-color: #00c4a7;
 }
+.card.is-active {
+    cursor: pointer;
+}
+.control {
+    margin-bottom: 0 !important;
+}
+.tagsinput input {
+    border-color: #dbdbdb;
+    border-width: 1px;
+    border-style: dashed;
+    padding-left: 5px;
+}

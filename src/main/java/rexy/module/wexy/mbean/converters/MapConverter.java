@@ -1,26 +1,32 @@
 package rexy.module.wexy.mbean.converters;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static java.util.Collections.emptyMap;
+import static java.util.stream.Collectors.toMap;
 
 public class MapConverter implements TypeConverter<Map<Object, Object>> {
 	
+	private static final Pattern TAG_SEPERATOR = Pattern.compile(",");
+	private static final Pattern ENTRY_PATTERN = Pattern.compile("\\s*(.+?)\\s*:\\s*(.+?)\\s*");
+	
 	@Override
 	public boolean handles(String type) {
-		return type.equals(Map.class.getName());
+		try {
+			return Class.forName(type).isAssignableFrom(Map.class);
+		}
+		catch (ClassNotFoundException e) {
+			return false;
+		}
 	}
 	
 	@Override
 	public Map<Object, Object> convert(String value, String type) {
-		// FIXME encode maps in a better way than this
-		Map<Object, Object> map = new HashMap<>();
-		if (value != null && value.contains("=")) {
-			String[] entries = value.substring(1, value.length() - 1).split(",", -1);
-			for (String entry : entries) {
-				String[] pair = entry.trim().split("=", -1);
-				map.put(pair[0], pair[1]);
-			}
-		}
-		return map;
+		return value == null ? emptyMap() : TAG_SEPERATOR.splitAsStream(value)
+			.map(ENTRY_PATTERN::matcher)
+			.filter(Matcher::matches)
+			.collect(toMap(matcher -> matcher.group(1), matcher -> matcher.group(2)));
 	}
 }

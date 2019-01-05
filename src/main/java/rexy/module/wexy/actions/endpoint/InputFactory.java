@@ -1,19 +1,26 @@
 package rexy.module.wexy.actions.endpoint;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import rexy.module.wexy.model.input.CheckboxInput;
 import rexy.module.wexy.model.input.Input;
 import rexy.module.wexy.model.input.JsonInput;
+import rexy.module.wexy.model.input.TagInput;
 import rexy.module.wexy.model.input.TextInput;
 
 import javax.management.MBeanAttributeInfo;
 import javax.management.ObjectInstance;
+import java.util.Collection;
+import java.util.Map;
 
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Character.toUpperCase;
 import static java.lang.String.join;
+import static java.util.stream.Collectors.joining;
 import static org.apache.commons.lang3.StringUtils.splitByCharacterTypeCamelCase;
 
 public class InputFactory {
+	private static final Logger logger = LogManager.getLogger(InputFactory.class);
 	
 	public static Input createInput(ObjectInstance objectInstance, MBeanAttributeInfo attributeInfo, Object value) {
 		String beanName = objectInstance.getObjectName().getKeyProperty("name");
@@ -39,11 +46,37 @@ public class InputFactory {
 		}
 		
 		String type = attributeInfo.getType();
-		if (type.equals("boolean")) {
-			return new CheckboxInput(label, attributeName, parseBoolean(value.toString()));
+		
+		switch (type) {
+			case "boolean":
+				return new CheckboxInput(label, attributeName, parseBoolean(value.toString()));
+				
+			case "int":
+			case "long":
+			case "short":
+			case "float":
+			case "double":
+			case "btye":
+			case "char":
+				return new TextInput(label, attributeName, value.toString());
 		}
 		
-		return new TextInput(label, attributeName, value.toString());
+		if (value instanceof String) {
+			return new TextInput(label, attributeName, value.toString());
+		}
+		
+		if (value instanceof Collection) {
+			return new TagInput(label, attributeName, value.toString());
+		}
+
+		if (value instanceof Map) {
+			String stringValue = ((Map<?, ?>) value).entrySet().stream()
+					.map(e -> e.getKey() + ": " + e.getValue())
+					.collect(joining(","));
+			return new TagInput(label, attributeName, stringValue);
+		}
+		
+		throw new RuntimeException("Unknown type: " + type);
 	}
 	
 }
