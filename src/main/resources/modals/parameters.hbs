@@ -1,5 +1,5 @@
 <div id="parameters" class="modal modal-fx-fadeInScale">
-    <div class="modal-background"></div>
+    <div id="parameters-background" class="modal-background"></div>
     <div class="modal-content">
 
         <div class="column is-12">
@@ -13,7 +13,8 @@
 
                 {{#with url}}
                     <div class="content">
-                        <form method="get" action="http://localhost:8081{{path}}" target="_blank">
+                        <form method="get" action="http://localhost:8081{{path}}" target="_blank"
+                                onsubmit="$('#parameters-background')[0].click()">
 
                             {{#parameters}}
                                 <div class="field is-horizontal">

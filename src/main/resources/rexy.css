@@ -106,6 +106,10 @@ div.is-checkradio {
     padding-bottom: 3px;
     flex: 2 1 0%;
 }
+.tagsinput .control {
+    margin-left: -4px !important;
+    margin-right: 8px !important;
+}
 .tagsinput input, .tagsinput .tags {
     margin-top:4px;
 }
@@ -122,4 +126,7 @@ div.is-checkradio {
 }
 #parameters .content {
     margin-top: 1em;
+}
+.bar .button {
+    margin: -6px;
 }
