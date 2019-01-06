@@ -5,6 +5,15 @@
     "wexy": {
       "enabled": true
     },
+    "cors": {
+      "enabled": true,
+      "headerName": "X-Requested-With",
+      "headerValue": "Wexy"
+    },
+    "removal": {
+      "enabled": true,
+      "headerName": "X-Requested-With"
+    },
     "delay": {
       "enabled": true
     },

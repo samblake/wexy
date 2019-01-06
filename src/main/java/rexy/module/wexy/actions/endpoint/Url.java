@@ -5,10 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static rexy.module.wexy.Utils.trim;
-
 public class Url {
-	private static final Pattern PATTERN = Pattern.compile("\\{.+?}");
+	private static final Pattern PATTERN = Pattern.compile("\\{(.+?)}");
 	
 	private final String template;
 	private final List<String> parameters;
@@ -38,7 +36,7 @@ public class Url {
 		Matcher matcher = PATTERN.matcher(url);
 		List<String> parameters = new ArrayList<>();
 		while (matcher.find()) {
-			parameters.add(trim(matcher.group(), 1, 1));
+			parameters.add(matcher.group(1));
 		}
 		return new Url(url, parameters);
 	}

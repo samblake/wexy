@@ -13,7 +13,7 @@
 
                 {{#with url}}
                     <div class="content">
-                        <form method="get" action="http://localhost:8081{{path}}" target="_blank"
+                        <form id="parameters-form" method="get" action="http://localhost:8081{{path}}" target="_blank"
                                 onsubmit="$('#parameters-background')[0].click()">
 
                             {{#parameters}}
@@ -31,7 +31,7 @@
 
                             <div class="field is-grouped is-grouped-centered is-horizontal">
                                 <p class="control">
-                                  <button class="button is-primary">Go</button>
+                                  <a class="button is-primary" onclick="go(document.getElementById('parameters-form'), 'http://localhost:8081{{template}}');">Go</a>
                                 </p>
                             </div>
 

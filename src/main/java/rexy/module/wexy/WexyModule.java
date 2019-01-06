@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import rexy.config.model.Api;
 import rexy.http.RexyHandler;
 import rexy.http.RexyRequest;
-import rexy.http.RexyResponse;
+import rexy.http.response.RexyResponse;
 import rexy.module.ModuleAdapter;
 import rexy.module.wexy.actions.WexyAction;
 import rexy.module.wexy.actions.api.ApiAction;

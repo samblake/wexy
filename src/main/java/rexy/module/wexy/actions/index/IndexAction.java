@@ -3,7 +3,7 @@ package rexy.module.wexy.actions.index;
 import com.github.jknack.handlebars.Handlebars;
 import rexy.config.model.Api;
 import rexy.http.RexyHandler;
-import rexy.http.RexyResponse;
+import rexy.http.response.RexyResponse;
 import rexy.module.wexy.actions.WexyAction;
 import rexy.module.wexy.model.Template;
 

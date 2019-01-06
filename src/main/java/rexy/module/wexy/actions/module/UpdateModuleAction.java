@@ -3,7 +3,7 @@ package rexy.module.wexy.actions.module;
 import com.github.jknack.handlebars.Handlebars;
 import rexy.config.model.Api;
 import rexy.config.model.Endpoint;
-import rexy.http.RexyResponse;
+import rexy.http.response.RexyResponse;
 import rexy.module.wexy.actions.endpoint.EndpointAction;
 import rexy.module.wexy.builders.BreadcrumbBuilder.HomeCrumbBuilder.ApiCrumbBuilder.EndpointCrumbBuilder;
 import rexy.module.wexy.model.Template;

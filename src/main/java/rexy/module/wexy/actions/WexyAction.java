@@ -2,7 +2,8 @@ package rexy.module.wexy.actions;
 
 import com.github.jknack.handlebars.Handlebars;
 import rexy.config.model.Api;
-import rexy.http.RexyResponse;
+import rexy.http.response.BasicRexyResponse;
+import rexy.http.response.RexyResponse;
 import rexy.module.wexy.builders.BreadcrumbBuilder.HomeCrumbBuilder;
 import rexy.module.wexy.builders.Builder;
 import rexy.module.wexy.model.Breadcrumbs;
@@ -34,7 +35,7 @@ public abstract class WexyAction {
 	
 	protected RexyResponse createResponse(Template template) throws IOException {
 		byte[] body = template.apply().getBytes(defaultCharset());
-		return new RexyResponse(200, emptyMap(), MIME_HTML, body);
+		return new BasicRexyResponse(200, emptyMap(), MIME_HTML, body);
 	}
 	
 	protected Template createTemplate(String name, Builder<Breadcrumbs> breadcrumbs) throws IOException {
@@ -46,7 +47,7 @@ public abstract class WexyAction {
 	}
 	
 	protected RexyResponse createRedirect(String location) {
-		return new RexyResponse(REDIRECT, singletonMap("Location", location), HTML, BODY);
+		return new BasicRexyResponse(REDIRECT, singletonMap("Location", location), HTML, BODY);
 	}
 	
 }
