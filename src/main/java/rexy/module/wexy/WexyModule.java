@@ -1,5 +1,6 @@
 package rexy.module.wexy;
 
+import com.codepoetics.ambivalence.Either;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.jknack.handlebars.Handlebars;
 import jauter.Routed;
@@ -7,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rexy.config.model.Api;
 import rexy.http.RexyHandler;
-import rexy.http.RexyRequest;
+import rexy.http.request.RexyRequest;
 import rexy.http.response.RexyResponse;
 import rexy.module.ModuleAdapter;
 import rexy.module.wexy.actions.WexyAction;
@@ -18,8 +19,8 @@ import rexy.module.wexy.actions.module.UpdateModuleAction;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
+import static com.codepoetics.ambivalence.Either.ofRight;
 import static java.util.Collections.singletonList;
 import static rexy.http.Method.GET;
 import static rexy.http.Method.POST;
@@ -55,8 +56,8 @@ public class WexyModule extends ModuleAdapter {
 	}
 	
 	@Override
-	public Optional<RexyResponse> handleRequest(Api api, RexyRequest request) {
-		return Optional.empty();
+	public Either<RexyRequest, RexyResponse> handleRequest(Api api, RexyRequest request) {
+		return Either.ofLeft(request);
 	}
 	
 	private final class InternalModule extends ModuleAdapter {
@@ -74,7 +75,7 @@ public class WexyModule extends ModuleAdapter {
 		}
 		
 		@Override
-		public Optional<RexyResponse> handleRequest(Api api, RexyRequest request) {
+		public Either<RexyRequest, RexyResponse> handleRequest(Api api, RexyRequest request) {
 			Routed<WexyAction> route = router.route(request.getMethod(), request.getUri());
 			
 			if (route.notFound()) {
@@ -82,16 +83,17 @@ public class WexyModule extends ModuleAdapter {
 			}
 			else {
 				Map<String, String> params = combineParams(request, route);
-				return Optional.of(route.target().perform(api, params));
+				return ofRight(route.target().perform(api, params));
 			}
 		}
-	}
-	
-	private Map<String, String> combineParams(RexyRequest request, Routed<WexyAction> route) {
-		Map<String, String> params = new HashMap<>();
-		params.putAll(route.params());
-		params.putAll(request.getParameters());
-		return params;
+		
+		private Map<String, String> combineParams(RexyRequest request, Routed<WexyAction> route) {
+			Map<String, String> params = new HashMap<>();
+			params.putAll(route.params());
+			params.putAll(request.getParameters());
+			return params;
+		}
+		
 	}
 	
 }
