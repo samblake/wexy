@@ -130,3 +130,7 @@ div.is-checkradio {
 .bar .button {
     margin: -6px;
 }
+.editor {
+    padding: 0px !important;
+    display: block;
+}

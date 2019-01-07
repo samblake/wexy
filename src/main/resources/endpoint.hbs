@@ -48,14 +48,8 @@
                                                 <div class="field-body">
                                                     <div class="field">
                                                         {{#eq type 'json'}}
-                                                            <input class="input" name="{{name}}" id="{{name}}-input" type="text" {{#if disabled}}disabled="disabled"{{/if}} value="{{value}}"/>
-    <!--
-    <div class="input">
-    <pre><code class="json">{
-    "abc": [1,2,3]
-    }</code></pre>
-    </div>
-    -->
+                                                            <pre id="{{name}}-editor" class="input editor">{{prettyValue}}</pre>
+                                                            <input name="{{name}}" id="{{name}}-input" type="hidden" {{#if disabled}}disabled="disabled"{{/if}} value="{{prettyValue}}"/>
                                                         {{/eq}}
                                                         {{#eq type 'checkbox'}}
                                                             <div class="is-checkradio">
