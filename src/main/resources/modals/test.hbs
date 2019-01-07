@@ -13,7 +13,7 @@
 
                 <div class="content">
                     <form id="parameters-form" method="get" action="http://localhost:8081{{template}}" target="_blank"
-                            onsubmit="event.preventDefault(); go(document.getElementById('parameters-form'));">
+                            onsubmit="event.preventDefault(); go(this, document.getElementById('go-button'), document.getElementById('test-viewer').editor);">
 
                         {{#parameters}}
                             <div class="field is-horizontal">
@@ -30,7 +30,7 @@
 
                         <div class="field is-grouped is-grouped-centered is-horizontal">
                             <p class="control">
-                                <submit class="button is-primary" onclick="go(document.getElementById('parameters-form'));">Go</submit>
+                                <button id="go-button" type="submit" class="button is-primary">Go</button>
                             </p>
                         </div>
 

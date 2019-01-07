@@ -86,11 +86,14 @@
             {
               "name": "Successful",
               "httpStatus": 200,
-              "body": {
+              "body":{
+                "category": [
+                  "dev"
+                ],
                 "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
-                "id": "g6Tk9tCFQpeqqxY2Rh-sTw",
-                "url": "https://api.chucknorris.io/jokes/g6Tk9tCFQpeqqxY2Rh-sTw",
-                "value": "Phobias are afraid of Chuck Norris."
+                "id": "nmlts0sqrwifigqta-rv_g",
+                "url": "https://api.chucknorris.io/jokes/nmlts0sqrwifigqta-rv_g",
+                "value": "Chuck Norris's log statements are always at the FATAL level."
               }
             },
             {
