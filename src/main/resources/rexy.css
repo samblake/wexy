@@ -130,6 +130,7 @@ div.is-checkradio {
 .bar .button {
     margin: -6px;
 }
+
 .editor {
     padding: 0px !important;
     display: block;
@@ -137,4 +138,29 @@ div.is-checkradio {
 .editor:focus-within {
     border-color: #3273dc;
     box-shadow: 0 0 0 0.125em rgba(50,115,220,.25);
+}
+.ace_hidden-cursors {
+    opacity: 0;
+}
+.editor:focus-within {
+    border-color: #3273dc;
+    box-shadow: 0 0 0 0.125em rgba(50,115,220,.25);
+}
+.editor .ace_gutter-active-line {
+    background-color: transparent;
+}
+.editor:focus-within .ace_gutter-active-line {
+    background-color: #dcdcdc;
+}
+.editor .ace_active-line {
+    background-color: transparent !important;
+}
+.editor:focus-within .ace_active-line {
+    background-color: rgba(0, 0, 0, 0.07) !important;
+}
+.editor .ace_marker-layer {
+    display: none;
+}
+.editor:focus-within .ace_marker-layer {
+    display: block;
 }
