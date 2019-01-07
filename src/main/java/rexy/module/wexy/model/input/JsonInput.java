@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import rexy.module.wexy.WexyServer;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static rexy.utils.Json.prettyPrint;
 
 public class JsonInput extends ValueInput<String> {
@@ -21,7 +22,7 @@ public class JsonInput extends ValueInput<String> {
 	}
 	
 	public String getPrettyValue() {
-		return prettyPrint(getValue());
+		return isBlank(getValue()) ? getValue() : prettyPrint(getValue());
 	}
 	
 }

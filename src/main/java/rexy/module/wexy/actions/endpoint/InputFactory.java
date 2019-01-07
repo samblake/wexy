@@ -45,7 +45,7 @@ public class InputFactory {
 			String beanName, String attributeName, String label, Object value) {
 		
 		if (beanName.equals("mock") && attributeName.equals("Body")) {
-			return new JsonInput(label, attributeName, value.toString());
+			return new JsonInput(label, attributeName, value == null ? "" : value.toString());
 		}
 		
 		String type = attributeInfo.getType();
