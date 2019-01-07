@@ -11,6 +11,8 @@ import rexy.module.wexy.mbean.MBeanRepo;
 
 import java.util.Map;
 
+import static rexy.module.wexy.Utils.toUrl;
+
 public abstract class AbstractEndpointAction extends AbstractApiAction {
 	
 	private final MBeanRepo mBeanRepo = new MBeanRepo();
@@ -24,7 +26,7 @@ public abstract class AbstractEndpointAction extends AbstractApiAction {
 		String endpointName = params.get("endpoint");
 		
 		Endpoint endpoint = api.getEndpoints().stream()
-				.filter(e -> e.getName().equals(endpointName))
+				.filter(e -> toUrl(e).equals(endpointName))
 				.findFirst().orElseThrow(() -> new RuntimeException("Unknown endpoint " + endpointName));
 		
 		return perform(api, endpoint, params, crumbBuilder.withEndpoint(endpoint));

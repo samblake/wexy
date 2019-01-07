@@ -58,7 +58,7 @@
       ]
     },
     {
-      "name": "chucknorris",
+      "name": "chuck norris",
       "baseUrl": "chucknorris",
       "contentType": "application/json",
       "proxy": "https://api.chucknorris.io",

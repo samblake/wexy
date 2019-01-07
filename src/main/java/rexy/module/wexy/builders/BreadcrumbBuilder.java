@@ -7,6 +7,8 @@ import rexy.module.wexy.model.Breadcrumbs.Breadcrumb;
 
 import javax.management.ObjectInstance;
 
+import static rexy.module.wexy.Utils.toUrl;
+
 public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 	
 	StringBuilder getPath();
@@ -87,14 +89,16 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 			public final class EndpointCrumbBuilder extends ChildCrumbBuilder {
 				
 				private final String name;
+				private final String urlSuffix;
 				
 				private EndpointCrumbBuilder(BreadcrumbBuilder parent, Endpoint endpoint) {
-					this(parent, endpoint.getName());
+					this(parent, endpoint.getName(), toUrl(endpoint));
 				}
 				
-				private EndpointCrumbBuilder(BreadcrumbBuilder parent, String name) {
+				private EndpointCrumbBuilder(BreadcrumbBuilder parent, String name, String urlSuffix) {
 					super(parent);
 					this.name = name;
+					this.urlSuffix = urlSuffix;
 				}
 				
 				@Override
@@ -104,7 +108,7 @@ public interface BreadcrumbBuilder extends Builder<Breadcrumbs> {
 				
 				@Override
 				protected String getUrlSuffix() {
-					return name;
+					return urlSuffix;
 				}
 				
 				public ModuleCrumbBuilder withModule(ObjectInstance objectInstance) {

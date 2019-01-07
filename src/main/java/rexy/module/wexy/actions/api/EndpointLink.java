@@ -2,6 +2,7 @@ package rexy.module.wexy.actions.api;
 
 import rexy.config.model.Endpoint;
 
+import static rexy.module.wexy.Utils.toUrl;
 import static rexy.utils.Paths.join;
 
 public class EndpointLink {
@@ -10,7 +11,7 @@ public class EndpointLink {
 	
 	public EndpointLink(Endpoint endpoint) {
 		this.endpoint = endpoint;
-		this.link = join("/", endpoint.getApi().getBaseUrl(), endpoint.getName());
+		this.link = join("/", endpoint.getApi().getBaseUrl(), toUrl(endpoint));
 	}
 	
 	public Endpoint getEndpoint() {

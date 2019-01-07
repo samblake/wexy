@@ -4,6 +4,7 @@ import rexy.config.model.Endpoint;
 
 import javax.management.ObjectInstance;
 
+import static rexy.module.wexy.Utils.toUrl;
 import static rexy.utils.Paths.join;
 
 public class PresetLink {
@@ -16,7 +17,7 @@ public class PresetLink {
 		this.endpoint = endpoint;
 		this.preset = preset;
 		this.name = preset.getObjectName().getKeyProperty("name");
-		this.link = '/' + join(endpoint.getApi().getBaseUrl(), endpoint.getName());
+		this.link = '/' + join(endpoint.getApi().getBaseUrl(), toUrl(endpoint));
 	}
 	
 	public String getName() {
