@@ -8,8 +8,8 @@
 
             <div class="column is-12">
                 <div class="card bar level">
-                    {{#with url}}
-                        <div class="level-left">{{template}}</div>
+                    {{#with uri}}
+                        <div class="level-left"><span class="method">{{method}}</span> {{template}}</div>
                         <div class="level-right">
                             <a class="button is-primary modal-button" data-target="parameters">Test</a>
                         </div>
@@ -115,7 +115,7 @@
         {{/with}}
     {{/tabs}}
 
-    {{#with url}}
+    {{#with uri}}
             {{> modals/test}}
     {{/with}}
 

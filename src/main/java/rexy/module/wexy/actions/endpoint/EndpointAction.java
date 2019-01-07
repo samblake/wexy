@@ -47,7 +47,7 @@ public class EndpointAction extends AbstractEndpointAction {
 			Api api, Endpoint endpoint, String activeModule) throws IOException {
 		return createResponse(template
 				.with("tabs", findTabs(api, endpoint, activeModule))
-				.with("url", generateUrl(api, endpoint)));
+				.with("uri", generateUri(api, endpoint)));
 	}
 	
 	protected List<Tab<Module>> findTabs(Api api, Endpoint endpoint, String activeModule) {
@@ -103,8 +103,9 @@ public class EndpointAction extends AbstractEndpointAction {
 		return new Tab<>(name, module);
 	}
 	
-	private Url generateUrl(Api api, Endpoint endpoint) {
-		return Url.fromUrl(baseUrl + api.getBaseUrl() + endpoint.getEndpoint());
+	private Uri generateUri(Api api, Endpoint endpoint) {
+		String url = baseUrl + api.getBaseUrl() + endpoint.getEndpoint();
+		return Uri.fromUrl(endpoint.getMethod(), url);
 	}
 	
 }

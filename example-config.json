@@ -35,6 +35,7 @@
         {
           "name": "location",
           "endpoint": "/location/search/?query={query}",
+          "method": "GET",
           "responses": [
             {
               "name": "Successful",
@@ -66,6 +67,7 @@
         {
           "name": "joke",
           "endpoint": "/jokes/random",
+          "method": "GET",
           "responses": [
             {
               "name": "Successful",
@@ -82,6 +84,7 @@
         {
           "name": "category joke",
           "endpoint": "/jokes/random?category={category}",
+          "method": "GET",
           "responses": [
             {
               "name": "Successful",
@@ -108,6 +111,7 @@
         {
           "name": "categories",
           "endpoint": "/jokes/categories",
+          "method": "GET",
           "responses": [
             {
               "name": "Successful",
