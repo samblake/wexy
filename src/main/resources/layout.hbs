@@ -27,15 +27,7 @@
                 bulmaTagsinput.attach('[type="tags"]');
 
                 $('.editor').each(function(index, element) {
-                    var editor = ace.edit(element.id);
-                    editor.setTheme("ace/theme/chrome");
-                    editor.session.setMode("ace/mode/json")
-                    editor.setOptions({
-                        autoScrollEditorIntoView: true,
-                        maxLines: 10
-                    });
-                    editor.renderer.setScrollMargin(10, 10);
-                    editor.setShowPrintMargin(false);
+                    makeEditor(element);
                 });
 
                 {{#notification}}

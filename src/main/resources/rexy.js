@@ -51,3 +51,21 @@ function go(form, template) {
         });
 
 }
+
+function makeEditor(element) {
+    var editor = ace.edit(element.id);
+
+    editor.setTheme("ace/theme/chrome");
+    editor.session.setMode("ace/mode/json")
+    editor.setOptions({
+        autoScrollEditorIntoView: true,
+        maxLines: 10
+    });
+    editor.renderer.setScrollMargin(10, 10);
+    editor.setShowPrintMargin(false);
+
+    var input = $(element).next();
+    editor.getSession().on('change', function() {
+        input.val(editor.getSession().getValue());
+    });
+}
