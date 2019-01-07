@@ -1,8 +1,10 @@
 package rexy.module.wexy.model.input;
 
-public class NumberInput extends ValueInput<Long> {
+import java.math.BigDecimal;
+
+public class NumberInput extends ValueInput<BigDecimal> {
 	
-	public NumberInput(String label, String name, Long value) {
+	public NumberInput(String label, String name, BigDecimal value) {
 		super("number", label, name, value);
 	}
 	

@@ -5,11 +5,14 @@ import org.apache.logging.log4j.Logger;
 import rexy.module.wexy.model.input.CheckboxInput;
 import rexy.module.wexy.model.input.Input;
 import rexy.module.wexy.model.input.JsonInput;
+import rexy.module.wexy.model.input.NumberInput;
 import rexy.module.wexy.model.input.TagInput;
 import rexy.module.wexy.model.input.TextInput;
 
 import javax.management.MBeanAttributeInfo;
 import javax.management.ObjectInstance;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Map;
 
@@ -50,19 +53,33 @@ public class InputFactory {
 		switch (type) {
 			case "boolean":
 				return new CheckboxInput(label, attributeName, parseBoolean(value.toString()));
-				
-			case "int":
-			case "long":
+			
 			case "short":
+				return new NumberInput(label, attributeName, BigDecimal.valueOf((Short)value));
+			case "int":
+				return new NumberInput(label, attributeName, BigDecimal.valueOf((Integer)value));
+			case "long":
+				return new NumberInput(label, attributeName, BigDecimal.valueOf((Long)value));
 			case "float":
+				return new NumberInput(label, attributeName, BigDecimal.valueOf((Float)value));
 			case "double":
+				return new NumberInput(label, attributeName, BigDecimal.valueOf((Double)value));
+				
 			case "btye":
 			case "char":
 				return new TextInput(label, attributeName, value.toString());
 		}
 		
 		if (value instanceof String) {
-			return new TextInput(label, attributeName, value.toString());
+			return new TextInput(label, attributeName, (String)value);
+		}
+		
+		if (value instanceof BigDecimal) {
+			return new NumberInput(label, attributeName, (BigDecimal)value);
+		}
+		
+		if (value instanceof BigInteger) {
+			return new NumberInput(label, attributeName, new BigDecimal((BigInteger)value));
 		}
 		
 		if (value instanceof Collection) {

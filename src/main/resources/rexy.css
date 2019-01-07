@@ -134,6 +134,7 @@ div.is-checkradio {
 .editor {
     padding: 0px !important;
     display: block;
+    margin-bottom: 1px !important;
 }
 .editor:focus-within {
     border-color: #3273dc;
