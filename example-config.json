@@ -11,7 +11,7 @@
       "headerValue": "Wexy"
     },
     "removal": {
-      "enabled": true,
+      "enabled": false,
       "headerName": "X-Requested-With"
     },
     "delay": {

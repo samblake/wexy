@@ -4,7 +4,12 @@ html, body {
   line-height: 1.5;
   height: 100%;
   background: #ECF0F3;
+}
+body {
   overflow-x: hidden;
+  max-width: 100%;
+  min-height: 100%;
+  height: auto;
 }
 nav.navbar {
   border-top: 4px solid #276cda;
@@ -116,11 +121,16 @@ div.is-checkradio {
 .input[type=tags] {
     color: transparent;
 }
+.tagsinput .tag.is-active {
+    background-color: #00d1b2;
+    color: #fff
+}
 @media screen and (min-width: 769px) {
     #tabs .input {
         max-width: 90%;
     }
 }
+
 #parameters label, #parameters input::placeholder {
     text-transform: capitalize;
 }
