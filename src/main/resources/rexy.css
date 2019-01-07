@@ -134,3 +134,7 @@ div.is-checkradio {
     padding: 0px !important;
     display: block;
 }
+.editor:focus-within {
+    border-color: #3273dc;
+    box-shadow: 0 0 0 0.125em rgba(50,115,220,.25);
+}
