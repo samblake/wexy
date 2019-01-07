@@ -26,9 +26,10 @@ $(function() {
     });
 });
 
-function go(form, template) {
+function go(form) {
 
     var regex = /\{(.+?)}/g;
+    var template = form.action;
     var match = regex.exec(template);
     while (match != null) {
         var name = match[1];
@@ -43,29 +44,58 @@ function go(form, template) {
                 "X-Requested-With": "Wexy"
             })
         })
-        .then(function (data) {
-            console.log('Request succeeded with JSON response', data);
+        .then(function(data) {
+            // TODO handle other types
+            return data.json();
+        })
+        .then(function (json) {
+            var jsonString = JSON.stringify(json, null, 4)
+            document.getElementById('test-viewer').editor.setValue(jsonString);
         })
         .catch(function (error) {
             console.log('Request failed', error);
+            document.getElementById('test-viewer').editor.setValue('');
+
+            bulmaToast.toast({
+                message: "Request failed",
+                type: "is-danger",
+                animate: { in: 'fadeIn', out: 'fadeOut' }
+            });
         });
 
 }
 
 function makeEditor(element) {
-    var editor = ace.edit(element.id);
-
-    editor.setTheme("ace/theme/chrome");
-    editor.session.setMode("ace/mode/json")
+    var editor = editify(element);
     editor.setOptions({
         autoScrollEditorIntoView: true,
         maxLines: 10
     });
-    editor.renderer.setScrollMargin(10, 10);
-    editor.setShowPrintMargin(false);
 
     var input = $(element).next();
     editor.getSession().on('change', function() {
         input.val(editor.getSession().getValue());
     });
+}
+
+function makeViewer(element) {
+    var editor = editify(element);
+    editor.setOptions({
+        autoScrollEditorIntoView: true,
+        maxLines: 10,
+        readOnly: true,
+        highlightActiveLine: false,
+        highlightGutterLine: false
+    });
+}
+
+function editify(element) {
+    var editor = ace.edit(element.id);
+    editor.setTheme("ace/theme/chrome");
+    editor.session.setMode("ace/mode/json")
+    editor.setShowPrintMargin(false);
+    editor.renderer.setScrollMargin(10, 10);
+
+    element.editor = editor;
+    return editor;
 }

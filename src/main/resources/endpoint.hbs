@@ -11,13 +11,7 @@
                     {{#with url}}
                         <div class="level-left">{{template}}</div>
                         <div class="level-right">
-                            {{#if parameterised}}
-                                <a class="button is-primary modal-button" data-target="parameters">Go</a>
-                            {{else}}
-                                <form method="get" action="http://localhost:8081{{path}}" target="_blank">
-                                    <button class="button is-primary" target="_blank">Go</button>
-                                </form>
-                            {{/if}}
+                            <a class="button is-primary modal-button" data-target="parameters">Test</a>
                         </div>
                     {{/with}}
                 </div>
@@ -122,9 +116,7 @@
     {{/tabs}}
 
     {{#with url}}
-        {{#if parameterised}}
-            {{> modals/parameters}}
-        {{/if}}
+            {{> modals/test}}
     {{/with}}
 
 {{/partial}}

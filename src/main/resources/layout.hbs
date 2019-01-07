@@ -27,7 +27,13 @@
                 bulmaTagsinput.attach('[type="tags"]');
 
                 $('.editor').each(function(index, element) {
-                    makeEditor(element);
+                    var next = $(element).next();
+                    if (next != undefined && next.prop('tagName') == 'INPUT') {
+                        makeEditor(element);
+                    }
+                    else {
+                        makeViewer(element);
+                    }
                 });
 
                 {{#notification}}
