@@ -26,7 +26,9 @@ $(function() {
     });
 });
 
-function go(form, button, editor) {
+function go(form, editor) {
+
+    var button = $(form).find('button[type=submit]');
 
     var regex = /\{(.+?)}/g;
     var template = form.action;
@@ -38,7 +40,7 @@ function go(form, button, editor) {
         match = regex.exec(template);
     }
 
-    $(button).addClass('is-loading');
+    button.addClass('is-loading');
 
     fetch(template, {
             method: form.method,
@@ -51,13 +53,13 @@ function go(form, button, editor) {
             return data.json();
         })
         .then(function (json) {
-            $(button).removeClass('is-loading');
+            button.removeClass('is-loading');
             var jsonString = JSON.stringify(json, null, 4)
             editor.setValue(jsonString);
         })
         .catch(function (error) {
             console.log('Request failed', error);
-            $(button).removeClass('is-loading');
+            button.removeClass('is-loading');
             editor.setValue('');
 
             bulmaToast.toast({
