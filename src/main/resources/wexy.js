@@ -43,7 +43,7 @@ function go(form, editor) {
     button.addClass('is-loading');
 
     fetch(template, {
-            mode: 'no-cors',
+            //mode: 'no-cors',
             method: form.method,
             headers: new Headers({
                 "X-Requested-With": "Wexy"
@@ -57,12 +57,6 @@ function go(form, editor) {
                 response.json().then(function (json) {
                     var jsonString = JSON.stringify(json, null, 4)
                     editor.setValue(jsonString);
-                });
-            }
-            else if (contentType.includes("xml")) {
-                response.text().then(function (xml) {
-                    var xmlString = format(xml)
-                    editor.setValue(xmlString);
                 });
             }
             else {
