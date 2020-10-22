@@ -43,19 +43,36 @@ function go(form, editor) {
     button.addClass('is-loading');
 
     fetch(template, {
+            mode: 'no-cors',
             method: form.method,
             headers: new Headers({
                 "X-Requested-With": "Wexy"
             })
         })
-        .then(function(data) {
+        .then(function(response) {
             // TODO handle other types
-            return data.json();
+            var header = response.headers.get("Content-Type");
+            var contentType = header == null ? "" : header.toLowerCase();
+            if (contentType.includes("json")) {
+                response.json().then(function (json) {
+                    var jsonString = JSON.stringify(json, null, 4)
+                    editor.setValue(jsonString);
+                });
+            }
+            else if (contentType.includes("xml")) {
+                response.text().then(function (xml) {
+                    var xmlString = format(xml)
+                    editor.setValue(xmlString);
+                });
+            }
+            else {
+                response.text().then(function (text) {
+                    editor.setValue(text);
+                });
+            }
         })
         .then(function (json) {
             button.removeClass('is-loading');
-            var jsonString = JSON.stringify(json, null, 4)
-            editor.setValue(jsonString);
         })
         .catch(function (error) {
             console.log('Request failed', error);

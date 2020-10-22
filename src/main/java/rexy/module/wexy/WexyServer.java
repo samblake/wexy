@@ -20,8 +20,6 @@ import static rexy.http.Method.GET;
 public class WexyServer extends RexyServer {
 	private static final Logger logger = LogManager.getLogger(WexyServer.class);
 	
-	private static final String MIME_HTML = "text/html";
-	
 	private final IndexAction indexAction;
 	private final Handlebars handlebars;
 	

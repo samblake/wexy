@@ -25,9 +25,11 @@ import static rexy.module.wexy.actions.endpoint.InputFactory.createInput;
 public class EndpointAction extends AbstractEndpointAction {
 	
 	protected final MBeanRepo mBeanRepo = new MBeanRepo();
+	private final String rexyLocation;
 	
-	public EndpointAction(String baseUrl, Handlebars handlebars) {
+	public EndpointAction(String baseUrl, Handlebars handlebars, String rexyLocation) {
 		super(baseUrl, handlebars);
+		this.rexyLocation = rexyLocation;
 	}
 	
 	@Override
@@ -45,9 +47,10 @@ public class EndpointAction extends AbstractEndpointAction {
 	
 	protected RexyResponse createResponse(Template template,
 			Api api, Endpoint endpoint, String activeModule) throws IOException {
+		
 		return createResponse(template
 				.with("tabs", findTabs(api, endpoint, activeModule))
-				.with("uri", generateUri(api, endpoint)));
+				.with("uri", generateUri(rexyLocation, api, endpoint)));
 	}
 	
 	protected List<Tab<Module>> findTabs(Api api, Endpoint endpoint, String activeModule) {
@@ -103,9 +106,9 @@ public class EndpointAction extends AbstractEndpointAction {
 		return new Tab<>(name, module);
 	}
 	
-	private Uri generateUri(Api api, Endpoint endpoint) {
-		String url = baseUrl + api.getBaseUrl() + endpoint.getEndpoint();
-		return Uri.fromUrl(endpoint.getMethod(), url);
+	private Uri generateUri(String domain, Api api, Endpoint endpoint) {
+		String path = baseUrl + api.getBaseUrl() + endpoint.getEndpoint();
+		return Uri.fromUrl(endpoint.getMethod(), domain, path);
 	}
 	
 }

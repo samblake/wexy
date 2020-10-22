@@ -17,8 +17,8 @@ import static rexy.module.wexy.model.Notification.success;
 
 public class UpdateModuleAction extends EndpointAction {
 	
-	public UpdateModuleAction(String baseUrl, Handlebars handlebars) {
-		super(baseUrl, handlebars);
+	public UpdateModuleAction(String baseUrl, Handlebars handlebars, String rexyLocation) {
+		super(baseUrl, handlebars, rexyLocation);
 	}
 	
 	@Override

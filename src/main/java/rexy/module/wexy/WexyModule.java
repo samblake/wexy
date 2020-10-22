@@ -6,6 +6,7 @@ import com.github.jknack.handlebars.Handlebars;
 import jauter.Routed;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rexy.Rexy.RexyDetails;
 import rexy.config.model.Api;
 import rexy.http.RexyHandler;
 import rexy.http.request.RexyRequest;
@@ -34,12 +35,12 @@ public class WexyModule extends ModuleAdapter {
 	private String baseUrl;
 	
 	@Override
-	public void init(JsonNode config) {
+	public void init(RexyDetails rexyDetails, JsonNode config) {
 		this.baseUrl = stringValue(config, "baseUrl", "/");
 		Integer port = intValue(config, "port", 8090);
 		InternalModule internalModule = new InternalModule();
 		this.wexyServer = new WexyServer(port, baseUrl, singletonList(internalModule));
-		internalModule.init(config);
+		internalModule.init(rexyDetails, config);
 		
 		try {
 			wexyServer.start();
@@ -65,13 +66,16 @@ public class WexyModule extends ModuleAdapter {
 		private final WexyRouter router = new WexyRouter();
 		
 		@Override
-		public void init(JsonNode config) {
+		public void init(RexyDetails rexyDetails, JsonNode config) {
 			Handlebars handlebars = wexyServer.getHandlebars();
 			Map<String, RexyHandler> apiRoutes = wexyServer.getRoutes();
 			
+			String rexyLocation = "http://" + stringValue(config, "rexy", "localhost") + ":" + rexyDetails.getPort()
+					+ (rexyDetails.getBaseUrl().equals("/") ? "" : rexyDetails.getBaseUrl());
+			
 			router.pattern(GET, "/:api", new ApiAction(baseUrl, handlebars, apiRoutes));
-			router.pattern(GET, "/:api/:endpoint", new EndpointAction(baseUrl, handlebars));
-			router.pattern(POST, "/:api/:endpoint", new UpdateModuleAction(baseUrl, handlebars));
+			router.pattern(GET, "/:api/:endpoint", new EndpointAction(baseUrl, handlebars, rexyLocation));
+			router.pattern(POST, "/:api/:endpoint", new UpdateModuleAction(baseUrl, handlebars, rexyLocation));
 		}
 		
 		@Override
