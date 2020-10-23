@@ -81,10 +81,10 @@ public class WexyModule extends ModuleAdapter {
 		
 		private String getRexyLocation(RexyDetails rexyDetails, JsonNode config) {
 			String hostname = stringValue(config, "rexy", this::getDefaultHostname);
-			String rexyBaseUrl = rexyDetails.getBaseUrl().startsWith("/")
+			String baseUrl = rexyDetails.getBaseUrl().startsWith("/")
 					? rexyDetails.getBaseUrl().substring(1): rexyDetails.getBaseUrl();
 			
-			return String.format("http://%s:%s%s", hostname, rexyDetails.getPort(), rexyBaseUrl);
+			return String.format("http://%s:%s%s", hostname, rexyDetails.getPort(), baseUrl);
 		}
 		
 		private String getDefaultHostname() {
