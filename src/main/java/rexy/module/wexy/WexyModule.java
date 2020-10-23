@@ -18,6 +18,8 @@ import rexy.module.wexy.actions.endpoint.EndpointAction;
 import rexy.module.wexy.actions.module.UpdateModuleAction;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,12 +72,32 @@ public class WexyModule extends ModuleAdapter {
 			Handlebars handlebars = wexyServer.getHandlebars();
 			Map<String, RexyHandler> apiRoutes = wexyServer.getRoutes();
 			
-			String rexyLocation = "http://" + stringValue(config, "rexy", "localhost") + ":" + rexyDetails.getPort()
-					+ (rexyDetails.getBaseUrl().equals("/") ? "" : rexyDetails.getBaseUrl());
+			String rexyLocation = getRexyLocation(rexyDetails, config);
 			
 			router.pattern(GET, "/:api", new ApiAction(baseUrl, handlebars, apiRoutes));
 			router.pattern(GET, "/:api/:endpoint", new EndpointAction(baseUrl, handlebars, rexyLocation));
 			router.pattern(POST, "/:api/:endpoint", new UpdateModuleAction(baseUrl, handlebars, rexyLocation));
+		}
+		
+		private String getRexyLocation(RexyDetails rexyDetails, JsonNode config) {
+			String hostname = stringValue(config, "rexy", this::getDefaultHostname);
+			String rexyBaseUrl = rexyDetails.getBaseUrl().startsWith("/")
+					? rexyDetails.getBaseUrl().substring(1): rexyDetails.getBaseUrl();
+			
+			return String.format("http://%s:%s%s", hostname, rexyDetails.getPort(), rexyBaseUrl);
+		}
+		
+		private String getDefaultHostname() {
+			logger.info("Rexy hostname not supplied");
+			try {
+				String hostName = InetAddress.getLocalHost().getHostName();
+				logger.warn("Using " + hostName + " as Rexy hostname");
+				return hostName;
+			}
+			catch (UnknownHostException e) {
+				logger.warn("Not able to detect hostname, using localhost");
+				return "localhost";
+			}
 		}
 		
 		@Override
