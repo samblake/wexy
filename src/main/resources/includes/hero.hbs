@@ -2,10 +2,16 @@
     <div class="hero-body">
         <div class="container">
             <h1 class="title">
-                Rexy
+                <a href="https://github.com/samblake/rexy/">Rexy</a>
             </h1>
             <h2 class="subtitle">
-                Mocking for REST endpoints
+                <nav class="breadcrumb" aria-label="breadcrumbs">
+                    <ul>
+                        {{#crumbs}}
+                            <li><a href="{{link}}">{{name}}</a></li>
+                        {{/crumbs}}
+                    </ul>
+                </nav>
             </h2>
         </div>
     </div>

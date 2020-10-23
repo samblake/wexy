@@ -11,13 +11,6 @@ body {
   min-height: 100%;
   height: auto;
 }
-nav.navbar {
-  border-top: 4px solid #276cda;
-  margin-bottom: 1rem;
-}
-.navbar-item.brand-text {
-  font-weight: 300;
-}
 .columns {
   margin: 0;
 }
@@ -54,6 +47,10 @@ span.method {
 }
 .hero.welcome .title, .hero.welcome .subtitle {
   color: hsl(192, 17%, 99%);
+}
+.breadcrumb {
+    font-weight: 500;
+    padding-top: 10px;
 }
 .card .content {
   font-size: 14px;
