@@ -91,7 +91,7 @@ public class WexyModule extends ModuleAdapter {
 			logger.info("Rexy hostname not supplied");
 			try {
 				String hostName = InetAddress.getLocalHost().getHostName();
-				logger.warn("Using " + hostName + " as Rexy hostname");
+				logger.info("Using " + hostName + " as Rexy hostname");
 				return hostName;
 			}
 			catch (UnknownHostException e) {
