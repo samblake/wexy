@@ -22,6 +22,12 @@ body {
 .card.bar {
   padding: 1rem;
 }
+.card-header {
+    background: #fafafa;
+}
+.card-header.is-toggle li:not(.is-active) {
+    background: #FFF;
+}
 .card-header-title {
   color: #8F99A3;
   font-weight: 400;
@@ -60,7 +66,13 @@ span.method {
   font-weight: 700;
   color: #8F99A3;
 }
+.card.is-table {
+    padding-bottom: 0;
+}
 .card-footer-item:hover {
+}
+.table {
+    background-color: transparent;
 }
 .card-table .table {
   margin-bottom: 0;
