@@ -24,6 +24,13 @@ $(function() {
         });
 
     });
+
+    $("#test-button").on('click', function(event) {
+        document.getElementById('test-viewer').editor.setValue('');
+        $("#parameters input").each(function(index, value) {
+            value.value = '';
+        })
+    })
 });
 
 function go(form, editor) {
@@ -55,12 +62,20 @@ function go(form, editor) {
             var contentType = header == null ? "" : header.toLowerCase();
             if (contentType.includes("json")) {
                 response.json().then(function (json) {
-                    var jsonString = JSON.stringify(json, null, 4)
+                    var jsonString = JSON.stringify(json, null, 4);
+                    editor.session.setMode("ace/mode/json");
                     editor.setValue(jsonString);
+                });
+            }
+            if (contentType.includes("xml")) {
+                response.text().then(function (xml) {
+                    editor.session.setMode("ace/mode/xml");
+                    editor.setValue(xml);
                 });
             }
             else {
                 response.text().then(function (text) {
+                    editor.session.setMode("ace/mode/text");
                     editor.setValue(text);
                 });
             }
