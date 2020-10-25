@@ -77,9 +77,10 @@ public class EndpointAction extends AbstractEndpointAction {
 	private Tab<Module> createTab(ObjectInstance moduleObjectInstance,
 			Set<ObjectInstance> objectInstances, Endpoint endpoint) {
 		
+		String contentType = endpoint.getApi().getContentType();
 		MBeanInfo info = mBeanRepo.getInfo(moduleObjectInstance);
 		List<Input> inputs = stream(info.getAttributes())
-				.map(attributeInfo -> createInput(moduleObjectInstance, attributeInfo,
+				.map(attributeInfo -> createInput(moduleObjectInstance, attributeInfo, contentType,
 						mBeanRepo.getAttributeValue(moduleObjectInstance, attributeInfo)))
 				.collect(toList());
 		

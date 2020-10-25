@@ -82,8 +82,8 @@ function go(form, editor) {
 
 }
 
-function makeEditor(element) {
-    var editor = editify(element);
+function makeEditor(element, type) {
+    var editor = editify(element, type);
     editor.setOptions({
         autoScrollEditorIntoView: true,
         maxLines: 10
@@ -95,8 +95,8 @@ function makeEditor(element) {
     });
 }
 
-function makeViewer(element) {
-    var editor = editify(element);
+function makeViewer(element, type) {
+    var editor = editify(element, type);
     editor.setOptions({
         autoScrollEditorIntoView: true,
         maxLines: 10,
@@ -106,10 +106,10 @@ function makeViewer(element) {
     });
 }
 
-function editify(element) {
+function editify(element, type) {
     var editor = ace.edit(element.id);
     editor.setTheme("ace/theme/chrome");
-    editor.session.setMode("ace/mode/json")
+    editor.session.setMode("ace/mode/" + type)
     editor.setShowPrintMargin(false);
     editor.renderer.setScrollMargin(10, 10);
 

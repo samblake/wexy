@@ -40,7 +40,11 @@
                                                 <div class="field-body">
                                                     <div class="field">
                                                         {{#eq type 'json'}}
-                                                            <pre id="{{name}}-editor" class="input editor">{{prettyValue}}</pre>
+                                                            <pre id="{{name}}-editor" class="input editor" data-type="json">{{prettyValue}}</pre>
+                                                            <input name="{{name}}" id="{{name}}-input" type="hidden" {{#if disabled}}disabled="disabled"{{/if}} value="{{prettyValue}}"/>
+                                                        {{/eq}}
+                                                        {{#eq type 'xml'}}
+                                                            <pre id="{{name}}-editor" class="input editor" data-type="xml">{{prettyValue}}</pre>
                                                             <input name="{{name}}" id="{{name}}-input" type="hidden" {{#if disabled}}disabled="disabled"{{/if}} value="{{prettyValue}}"/>
                                                         {{/eq}}
                                                         {{#eq type 'checkbox'}}

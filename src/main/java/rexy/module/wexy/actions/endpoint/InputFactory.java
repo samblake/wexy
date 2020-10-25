@@ -8,6 +8,7 @@ import rexy.module.wexy.model.input.JsonInput;
 import rexy.module.wexy.model.input.NumberInput;
 import rexy.module.wexy.model.input.TagInput;
 import rexy.module.wexy.model.input.TextInput;
+import rexy.module.wexy.model.input.XmlInput;
 
 import javax.management.MBeanAttributeInfo;
 import javax.management.ObjectInstance;
@@ -23,16 +24,17 @@ import static java.util.stream.Collectors.joining;
 import static org.apache.commons.lang3.StringUtils.splitByCharacterTypeCamelCase;
 
 public class InputFactory {
-	private static final Logger logger = LogManager.getLogger(InputFactory.class);
 	
-	public static Input createInput(ObjectInstance objectInstance, MBeanAttributeInfo attributeInfo, Object value) {
+	public static Input createInput(ObjectInstance objectInstance,
+			MBeanAttributeInfo attributeInfo, String contentType, Object value) {
+		
 		String beanName = objectInstance.getObjectName().getKeyProperty("name");
 		String attributeName = attributeInfo.getName();
 		
 		String label = join(" ", splitByCharacterTypeCamelCase(attributeName));
 		label = toUpperCase(label.charAt(0)) + label.substring(1);
 		
-		Input input = createInput(attributeInfo, beanName, attributeName, label, value);
+		Input input = createInput(attributeInfo, beanName, attributeName, label, value, contentType);
 		
 		if (!attributeInfo.isWritable()) {
 			input.setDisabled();
@@ -41,11 +43,17 @@ public class InputFactory {
 		return input;
 	}
 	
-	private static Input createInput(MBeanAttributeInfo attributeInfo,
-			String beanName, String attributeName, String label, Object value) {
+	private static Input createInput(MBeanAttributeInfo attributeInfo, String beanName,
+			String attributeName, String label, Object value, String contentType) {
 		
 		if (beanName.equals("mock") && attributeName.equals("Body")) {
-			return new JsonInput(label, attributeName, value == null ? "" : value.toString());
+			if (contentType.toLowerCase().contains("json")) {
+				return new JsonInput(label, attributeName, value == null ? "" : value.toString());
+			}
+			if (contentType.toLowerCase().contains("xml")) {
+				return new XmlInput(label, attributeName, value == null ? "" : value.toString());
+			}
+			return new TextInput(label, attributeName, (String)value);
 		}
 		
 		String type = attributeInfo.getType();

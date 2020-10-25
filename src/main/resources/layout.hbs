@@ -30,10 +30,10 @@
                 $('.editor').each(function(index, element) {
                     var next = $(element).next();
                     if (next != undefined && next.prop('tagName') == 'INPUT') {
-                        makeEditor(element);
+                        makeEditor(element, $(element).data("type"));
                     }
                     else {
-                        makeViewer(element);
+                        makeViewer(element, $(element).data("type"));
                     }
                 });
 
